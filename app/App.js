@@ -7,6 +7,7 @@ import { LoginRegister } from './src/loginRegister/LoginRegister';
 import { News } from './src/news/News';
 import { Stats } from './src/stats/Stats';
 import { Schedule } from './src/schedule/Schedule';
+import { menu } from './src/consts/Strings';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,11 +15,11 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Liga Kobiet" component={HomeScreen} />
-        <Stack.Screen name="Harmonogram" component={Schedule} />
-        <Stack.Screen name="Statystyki" component={Stats} />
-        <Stack.Screen name="Aktualności" component={News} />
-        <Stack.Screen name="Login Rejestracja" component={LoginRegister} />
+        <Stack.Screen name={menu.title} component={HomeScreen} />
+        <Stack.Screen name={menu.schedule} component={Schedule} />
+        <Stack.Screen name={menu.stats} component={Stats} />
+        <Stack.Screen name={menu.news} component={News} />
+        <Stack.Screen name={menu.loginRegister} component={LoginRegister} />
       </Stack.Navigator>
     </NavigationContainer>
   );
