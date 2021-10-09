@@ -1,16 +1,14 @@
 import * as React from 'react';
-import {Button, Text} from 'react-native'
+import { View } from 'react-native';
+import { TextButton } from './consts/Buttons';
 
 export const HomeScreen = ({ navigation }) => {
-    return (
-      <Button
-        title="Go to Jane's profile"
-        onPress={() =>
-          navigation.navigate('Profile', { name: 'Jane' })
-        }
-      />
-    );
-  };
-export  const ProfileScreen = ({ navigation, route }) => {
-    return <Text>This is {route.params.name}'s profile</Text>;
-  };
+  return (
+    <View>
+      <TextButton text="Harmonogram" dir="Harmonogram" navigation={navigation} />
+      <TextButton text="Statystyki" dir="Statystyki" navigation={navigation} />
+      <TextButton text="Aktualności" dir="Aktualności" navigation={navigation} />
+      <TextButton text="Login/Rejestracja" dir="Login Rejestracja" navigation={navigation} />
+    </View>
+  );
+};
