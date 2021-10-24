@@ -3,5 +3,5 @@ export const menu = {
   schedule: 'Harmonogram',
   stats: 'Statystyki',
   news: 'Aktualności',
-  loginRegister: 'Login Rejestracja',
+  loginRegister: 'Logowanie',
 };

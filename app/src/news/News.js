@@ -1,6 +1,18 @@
 import * as React from 'react';
-import { Text } from 'react-native';
+import { Image, SafeAreaView, Text, View } from 'react-native';
+import { news } from '../hardCodingDb/news';
 
 export const News = ({ navigation, route }) => {
-  return <Text>This is {route.params.name} page</Text>;
+  return (
+    <SafeAreaView>
+      {news.map((item) => {
+        return (
+          <View key={item.index}>
+            <Image source={{ uri: item.image }} />
+            <Text>{item.title}</Text>
+          </View>
+        );
+      })}
+    </SafeAreaView>
+  );
 };
