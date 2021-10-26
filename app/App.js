@@ -1,7 +1,6 @@
 import React from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ImageBackground, TouchableOpacity } from 'react-native';
 
 import { HomeScreen } from './src/HomeScreen';
 import { LoginRegister } from './src/loginRegister/LoginRegister';
@@ -9,8 +8,6 @@ import { News } from './src/news/News';
 import { Stats } from './src/stats/Stats';
 import { Schedule } from './src/schedule/Schedule';
 import { menu } from './src/consts/Strings';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { TextButton } from './src/consts/Buttons';
 
 const Stack = createNativeStackNavigator();
 
