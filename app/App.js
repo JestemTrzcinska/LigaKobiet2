@@ -3,11 +3,12 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HomeScreen } from './src/HomeScreen';
-import { LoginRegister } from './src/loginRegister/LoginRegister';
+import { Login } from './src/loginRegister/Login';
+import { Register } from './src/loginRegister/Register';
 import { News } from './src/news/News';
 import { Stats } from './src/stats/Stats';
 import { Schedule } from './src/schedule/Schedule';
-import { menu } from './src/consts/Strings';
+import { menu } from './src/consts/strings';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,13 +41,14 @@ const App = () => {
         }}
         source={require('./src/hardCodingDb/bg-img.png')}
         resizeMode="cover"> */}
-      <Stack.Navigator>
-        <Stack.Screen name={menu.title} component={HomeScreen} options={stackOptions} />
-        <Stack.Screen name={menu.schedule} component={Schedule} options={stackOptions} />
-        <Stack.Screen name={menu.stats} component={Stats} options={stackOptions} />
+      <Stack.Navigator screenOptions={stackOptions}>
+        <Stack.Screen name={menu.title} component={HomeScreen} />
+        <Stack.Screen name={menu.schedule} component={Schedule} />
+        <Stack.Screen name={menu.stats} component={Stats} />
 
-        <Stack.Screen name={menu.news} component={News} options={stackOptions} />
-        <Stack.Screen name={menu.loginRegister} component={LoginRegister} options={stackOptions} />
+        <Stack.Screen name={menu.news} component={News} />
+        <Stack.Screen name={menu.login} component={Login} />
+        <Stack.Screen name={menu.register} component={Register} />
       </Stack.Navigator>
       {/* </ImageBackground> */}
     </NavigationContainer>

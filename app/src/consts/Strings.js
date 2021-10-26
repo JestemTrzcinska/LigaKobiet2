@@ -3,15 +3,20 @@ export const menu = {
   schedule: 'Harmonogram',
   stats: 'Statystyki',
   news: 'Aktualności',
-  loginRegister: 'Logowanie',
+  login: 'Logowanie',
+  register: 'Rejestracja',
 };
 
 export const placeholder = {
   email: 'e-mail',
   password: 'hasło',
+  firstName: 'imię',
+  lastName: 'nazwisko',
+  password2: 'powtórz hasło',
 };
 
 export const buttons = {
   submit: 'Potwierdź',
   create: 'Stwórz je!',
+  login: 'Zaloguj się!',
 };

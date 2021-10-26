@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextInput, Alert, View } from 'react-native';
-import { placeholder, buttons } from '../consts/Strings';
+import { placeholder, buttons, menu } from '../consts/strings';
 import { TextButton } from '../consts/Buttons';
 
-export const LoginRegister = ({ navigation, route }) => {
+export const Login = ({ navigation, route }) => {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
 
@@ -34,7 +34,7 @@ export const LoginRegister = ({ navigation, route }) => {
         <TextButton
           style={styles}
           onPress={() => {
-            Alert.alert('Simple Button pressed');
+            navigation.navigate(menu.register);
           }}
           text={buttons.create}
         />
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   top: {
-    flex: 4,
+    flex: 6,
     justifyContent: 'center',
   },
   input: {
