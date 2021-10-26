@@ -3,6 +3,8 @@ import { SafeAreaView, StyleSheet, Text, TextInput, Alert, View } from 'react-na
 import { placeholder, buttons, menu } from '../consts/strings';
 import { TextButton } from '../consts/Buttons';
 
+import { styles } from './loginRegister.style';
+
 export const Register = ({ navigation, route }) => {
   const [firstName, onChangeFirstName] = useState('');
   const [lastName, onChangeLastName] = useState('');
@@ -62,28 +64,3 @@ export const Register = ({ navigation, route }) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-  },
-  top: {
-    flex: 6,
-    justifyContent: 'center',
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-  button: {
-    padding: 5,
-    alignSelf: 'center',
-    fontSize: 25,
-  },
-  bottom: {
-    flex: 1,
-    alignItems: 'center',
-  },
-});
