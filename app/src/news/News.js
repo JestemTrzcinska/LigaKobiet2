@@ -4,7 +4,7 @@ import { news } from '../hardCodingDb/news';
 
 export const News = ({ navigation, route }) => {
   return (
-    <SafeAreaView style={styles.flex}>
+    <SafeAreaView style={styles.view}>
       {news.map((item) => {
         return (
           <View key={item.index} style={styles.card}>
@@ -18,7 +18,8 @@ export const News = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  flex: {
+  view: {
+    marginHorizontal: 20,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',

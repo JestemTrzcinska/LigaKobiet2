@@ -9,11 +9,23 @@ export const styles = StyleSheet.create({
     flex: 6,
     justifyContent: 'center',
   },
+  text: {
+    color: 'white',
+    padding: 10,
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 20,
+  },
   input: {
     height: 40,
-    margin: 12,
+    marginHorizontal: 10,
     borderWidth: 1,
     padding: 10,
+    paddingTop: 10,
+  },
+  biggerInput: {
+    height: 100,
+    paddingTop: 10,
   },
   button: {
     padding: 5,

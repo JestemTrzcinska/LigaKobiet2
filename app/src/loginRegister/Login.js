@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, TextInput, Alert, View } from 'react-na
 import { placeholder, buttons, menu } from '../consts/strings';
 import { TextButton } from '../consts/Buttons';
 
-import { styles } from './loginRegister.style';
+import { styles, placeholderColor } from './loginRegister.style';
 
 export const Login = ({ navigation, route }) => {
   const [email, onChangeEmail] = useState('');
@@ -14,13 +14,20 @@ export const Login = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.view}>
       <View style={styles.top}>
-        <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} placeholder={placeholder.email} />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeEmail}
+          value={email}
+          placeholder={placeholder.email}
+          placeholderTextColor={placeholderColor}
+        />
         <TextInput
           style={styles.input}
           onChangeText={onChangePassword}
           // onChangeText={(text) => onChangePassword(text)}
           value={password}
           placeholder={placeholder.password}
+          placeholderTextColor={placeholderColor}
         />
         <TextButton
           style={styles}

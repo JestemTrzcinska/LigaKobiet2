@@ -5,6 +5,8 @@ export const menu = {
   news: 'Aktualności',
   login: 'Logowanie',
   register: 'Rejestracja',
+  profile: 'Moje konto',
+  editProfile: 'Edytuj dane',
 };
 
 export const placeholder = {
@@ -19,4 +21,11 @@ export const buttons = {
   submit: 'Potwierdź',
   create: 'Stwórz je!',
   login: 'Zaloguj się!',
+  edit: 'Edytuj dane',
+};
+
+export const profile = {
+  favTeam: 'Ulubiony klub: ',
+  city: 'Miejscowość: ',
+  about: 'O mnie: ',
 };

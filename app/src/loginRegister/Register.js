@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, TextInput, Alert, View } from 'react-na
 import { placeholder, buttons, menu } from '../consts/strings';
 import { TextButton } from '../consts/Buttons';
 
-import { styles } from './loginRegister.style';
+import { styles, placeholderColor } from './loginRegister.style';
 
 export const Register = ({ navigation, route }) => {
   const [firstName, onChangeFirstName] = useState('');
@@ -11,8 +11,6 @@ export const Register = ({ navigation, route }) => {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
   const [password2, onChangePassword2] = useState('');
-
-  // let dataToSend = { email, password };
 
   return (
     <SafeAreaView style={styles.view}>
@@ -22,25 +20,35 @@ export const Register = ({ navigation, route }) => {
           onChangeText={onChangeFirstName}
           value={firstName}
           placeholder={placeholder.firstName}
+          placeholderTextColor={placeholderColor}
         />
         <TextInput
           style={styles.input}
           onChangeText={onChangeLastName}
           value={lastName}
           placeholder={placeholder.lastName}
+          placeholderTextColor={placeholderColor}
         />
-        <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} placeholder={placeholder.email} />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeEmail}
+          value={email}
+          placeholder={placeholder.email}
+          placeholderTextColor={placeholderColor}
+        />
         <TextInput
           style={styles.input}
           onChangeText={onChangePassword}
           value={password}
           placeholder={placeholder.password}
+          placeholderTextColor={placeholderColor}
         />
         <TextInput
           style={styles.input}
           onChangeText={onChangePassword2}
           value={password2}
           placeholder={placeholder.password2}
+          placeholderTextColor={placeholderColor}
         />
         <TextButton
           style={styles}
