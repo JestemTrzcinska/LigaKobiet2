@@ -13,7 +13,8 @@ import { Register } from './src/loginRegister/Register';
 import { Profile } from './src/profile/Profile';
 import { EditProfile } from './src/profile/EditProfile';
 
-import { menu } from './src/consts/strings';
+import { menu, single } from './src/consts/strings';
+import { NewsItem } from './src/news/NewsItem';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,8 @@ const App = () => {
 
         <Stack.Screen name={menu.profile} component={Profile} />
         <Stack.Screen name={menu.editProfile} component={EditProfile} />
+
+        <Stack.Screen name={single.newsItem} component={NewsItem} />
       </Stack.Navigator>
     </NavigationContainer>
   );

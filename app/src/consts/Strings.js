@@ -29,3 +29,7 @@ export const profile = {
   city: 'Miejscowość: ',
   about: 'O mnie: ',
 };
+
+export const single = {
+  newsItem: 'Artykuł',
+};
