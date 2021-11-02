@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, Alert, View } from 'react-native';
-import { placeholder, buttons, menu } from '../consts/strings';
+import { Text, TextInput, Alert, View } from 'react-native';
+import Containter from '../Container';
 import { TextButton } from '../consts/Buttons';
-
 import { styles, placeholderColor } from './loginRegister.style';
+import { placeholder, buttons, menu } from '../consts/strings';
 
 export const Login = ({ navigation, route }) => {
   const [email, onChangeEmail] = useState('');
@@ -12,7 +12,7 @@ export const Login = ({ navigation, route }) => {
   // let dataToSend = { email, password };
 
   return (
-    <SafeAreaView style={styles.view}>
+    <Containter>
       <View style={styles.top}>
         <TextInput
           style={styles.input}
@@ -48,6 +48,6 @@ export const Login = ({ navigation, route }) => {
           text={buttons.create}
         />
       </View>
-    </SafeAreaView>
+    </Containter>
   );
 };

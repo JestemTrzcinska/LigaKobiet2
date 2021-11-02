@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, Alert, View } from 'react-native';
-import { placeholder, buttons, menu } from '../consts/strings';
+import { Text, TextInput, Alert, View } from 'react-native';
+import Containter from '../Container';
 import { TextButton } from '../consts/Buttons';
-
 import { styles, placeholderColor } from './loginRegister.style';
+import { placeholder, buttons, menu } from '../consts/strings';
 
 export const Register = ({ navigation, route }) => {
   const [firstName, onChangeFirstName] = useState('');
@@ -13,7 +13,7 @@ export const Register = ({ navigation, route }) => {
   const [password2, onChangePassword2] = useState('');
 
   return (
-    <SafeAreaView style={styles.view}>
+    <Containter>
       <View style={styles.top}>
         <TextInput
           style={styles.input}
@@ -69,6 +69,6 @@ export const Register = ({ navigation, route }) => {
           text={buttons.login}
         />
       </View>
-    </SafeAreaView>
+    </Containter>
   );
 };

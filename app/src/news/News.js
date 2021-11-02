@@ -1,25 +1,28 @@
 import React from 'react';
-import { Image, SafeAreaView, Text, View, StyleSheet, Row } from 'react-native';
+import { Image, Text, View, StyleSheet, Row } from 'react-native';
+import Containter from '../Container';
+
 import { news } from '../hardCodingDb/news';
 
 export const News = ({ navigation, route }) => {
   return (
-    <SafeAreaView style={styles.view}>
-      {news.map((item) => {
-        return (
-          <View key={item.index} style={styles.card}>
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <Text>{item.title}</Text>
-          </View>
-        );
-      })}
-    </SafeAreaView>
+    <Containter>
+      <View style={styles.view}>
+        {news.map((item) => {
+          return (
+            <View key={item.index} style={styles.card}>
+              <Image source={{ uri: item.image }} style={styles.image} />
+              <Text>{item.title}</Text>
+            </View>
+          );
+        })}
+      </View>
+    </Containter>
   );
 };
 
 const styles = StyleSheet.create({
   view: {
-    marginHorizontal: 20,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',

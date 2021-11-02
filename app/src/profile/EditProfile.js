@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, SafeAreaView, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Alert, Text, View, TextInput } from 'react-native';
+import Containter from '../Container';
 
 import { TextButton } from '../consts/Buttons';
 import { buttons, profile } from '../consts/strings';
@@ -14,7 +15,7 @@ export const EditProfile = ({ navigation, route }) => {
   const [about, setAbout] = useState(profileDB.about);
 
   return (
-    <SafeAreaView style={styles.view}>
+    <Containter>
       <View style={styles.top}>
         <Text style={styles.text}>{profile.favTeam}</Text>
         <TextInput
@@ -53,6 +54,6 @@ export const EditProfile = ({ navigation, route }) => {
           text={buttons.submit}
         />
       </View>
-    </SafeAreaView>
+    </Containter>
   );
 };

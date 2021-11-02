@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Containter from './Container';
 import { TextButtonNav } from './consts/Buttons';
 import { menu } from './consts/strings';
 
@@ -8,7 +8,7 @@ export const HomeScreen = ({ navigation }) => {
   const [isLogged, setIsLogged] = useState(false);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <Containter>
       <View style={styles.options}>
         <TextButtonNav style={styles} text={menu.schedule} dir={menu.schedule} navigation={navigation} />
         <TextButtonNav style={styles} text={menu.news} dir={menu.news} navigation={navigation} />
@@ -19,17 +19,17 @@ export const HomeScreen = ({ navigation }) => {
           <TextButtonNav style={styles} text={menu.login} dir={menu.login} navigation={navigation} />
         )}
       </View>
-    </SafeAreaView>
+    </Containter>
   );
 };
 
 const styles = StyleSheet.create({
   options: {
-    justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   optionButton: {
     fontSize: 35,
-    padding: 40,
   },
 });

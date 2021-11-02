@@ -18,34 +18,26 @@ import { menu } from './src/consts/strings';
 const Stack = createNativeStackNavigator();
 
 const stackOptions = {
+  headerTransparent: true,
   headerTitleStyle: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     letterSpacing: 2,
   },
-  // headerShown: false,
 };
 
 const Theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: '#ddd',
+    background: 'transparent',
   },
 };
 
 const App = () => {
   return (
     <NavigationContainer theme={Theme}>
-      {/* <ImageBackground
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        source={require('./src/hardCodingDb/bg-img.png')}
-        resizeMode="cover"> */}
       <Stack.Navigator screenOptions={stackOptions}>
         <Stack.Screen name={menu.title} component={HomeScreen} />
         <Stack.Screen name={menu.schedule} component={Schedule} />
@@ -58,7 +50,6 @@ const App = () => {
         <Stack.Screen name={menu.profile} component={Profile} />
         <Stack.Screen name={menu.editProfile} component={EditProfile} />
       </Stack.Navigator>
-      {/* </ImageBackground> */}
     </NavigationContainer>
   );
 };

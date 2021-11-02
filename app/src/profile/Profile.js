@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import Containter from '../Container';
 
 import { TextButton } from '../consts/Buttons';
 import { buttons, profile, menu } from '../consts/strings';
@@ -10,7 +11,7 @@ import { styles } from './Profile.style';
 
 export const Profile = ({ navigation, route }) => {
   return (
-    <SafeAreaView style={styles.view}>
+    <Containter>
       <View style={styles.top}>
         <Text style={styles.text}>
           {profile.favTeam} {profileDB.favTeam}
@@ -31,6 +32,6 @@ export const Profile = ({ navigation, route }) => {
           text={buttons.edit}
         />
       </View>
-    </SafeAreaView>
+    </Containter>
   );
 };
