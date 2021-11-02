@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Image, Text, View, StyleSheet, TouchableOpacity, Alert, Dimensions } from 'react-native';
 import Containter from '../Container';
 
 import { single } from '../consts/strings';
@@ -19,7 +19,7 @@ export const News = ({ navigation, route }) => {
                 navigation.navigate(single.newsItem, { item });
               }}>
               <Image source={{ uri: item.image }} style={styles.image} />
-              <Text numberOfLines={1} style={styles.title}>
+              <Text numberOfLines={4} style={styles.title}>
                 {item.title}
               </Text>
             </TouchableOpacity>
@@ -34,22 +34,23 @@ const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    marginTop: 10,
   },
   card: {
-    width: 150,
-    height: 150,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 5,
+    width: Dimensions.get('window').width - 40,
+    height: 110,
   },
   image: {
     width: 100,
     height: 100,
+    borderRadius: 20,
   },
   title: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 20,
+    position: 'absolute',
+    right: 0,
+    width: Dimensions.get('window').width - 40 - 105,
   },
 });

@@ -6,7 +6,7 @@ export const NewsItem = ({ route }) => {
   const { index, title, description, image } = route.params.item;
   return (
     <Containter>
-      <ScrollView>
+      <ScrollView style={styles.view}>
         <Image source={{ uri: image }} style={styles.image} />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
@@ -16,6 +16,9 @@ export const NewsItem = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  view: {
+    marginTop: 10,
+  },
   image: {
     width: Dimensions.get('window').width - 40,
     height: 200,
