@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    borderColor: 'white',
   },
   button: {
     padding: 5,
@@ -23,6 +24,9 @@ export const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     alignItems: 'center',
+  },
+  bottomText: {
+    color: 'white',
   },
 });
 

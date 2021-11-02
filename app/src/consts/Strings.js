@@ -22,6 +22,8 @@ export const buttons = {
   create: 'Stwórz je!',
   login: 'Zaloguj się!',
   edit: 'Edytuj dane',
+  dontHaveAnAccount: 'Nie posiadasz jeszcze konta?',
+  alreadyHaveAnAccount: 'Masz już konto?',
 };
 
 export const profile = {

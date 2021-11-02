@@ -38,7 +38,7 @@ export const Login = ({ navigation, route }) => {
         />
       </View>
       <View style={styles.bottom}>
-        <Text>Nie posiadasz jeszcze konta?</Text>
+        <Text style={styles.bottomText}>{buttons.dontHaveAnAccount}</Text>
 
         <TextButton
           style={styles}

@@ -59,7 +59,7 @@ export const Register = ({ navigation, route }) => {
         />
       </View>
       <View style={styles.bottom}>
-        <Text>Masz już konto?</Text>
+        <Text style={styles.bottomText}>{buttons.alreadyHaveAnAccount}</Text>
 
         <TextButton
           style={styles}
