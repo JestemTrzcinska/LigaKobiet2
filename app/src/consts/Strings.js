@@ -19,7 +19,7 @@ export const placeholder = {
 
 export const buttons = {
   submit: 'Potwierdź',
-  create: 'Stwórz je!',
+  create: 'Zarejestruj się!',
   login: 'Zaloguj się!',
   edit: 'Edytuj dane',
   dontHaveAnAccount: 'Nie posiadasz jeszcze konta?',
@@ -34,4 +34,5 @@ export const profile = {
 
 export const single = {
   newsItem: 'Artykuł',
+  noData: 'Ups! Nie ma tutaj informacji na ten temat...',
 };
