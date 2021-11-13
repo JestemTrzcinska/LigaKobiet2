@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Containter from '../Container';
 import { Table } from './Table';
@@ -10,10 +10,12 @@ import { styles } from './stats.style';
 import { leagues, seasons } from '../hardCodingDb/leagues';
 import { games } from '../hardCodingDb/games';
 import { single } from '../consts/strings';
+import { TextButton } from '../consts/Buttons';
 
 export const Stats = ({ navigation, route }) => {
   const [selectedValue, setSelectedValue] = useState('Ekstraliga');
   const [selectedSeason, setSelectedSeason] = useState('2020/2021');
+  const [selectedLastRound, setSelectedLastRound] = useState(null);
   const [selectedRound, setSelectedRound] = useState(null);
 
   const rigthLeagueAndSeasonFinishedGames = games.filter((item) => {
@@ -29,7 +31,8 @@ export const Stats = ({ navigation, route }) => {
 
   return (
     <Containter>
-      {selectedRound ? null : setSelectedRound(lastRound)}
+      {selectedLastRound ? null : setSelectedLastRound(lastRound)}
+      {selectedLastRound ? null : lastRound == 1 ? setSelectedRound(lastRound) : setSelectedRound(lastRound - 1)}
 
       <View style={styles.top}>
         <Picker
@@ -56,7 +59,25 @@ export const Stats = ({ navigation, route }) => {
         <View>
           <Table league={selectedValue} season={selectedSeason} />
           <Round league={selectedValue} season={selectedSeason} round={lastRound} last={true} />
-          <Round league={selectedValue} season={selectedSeason} round={1} />
+
+          <View style={styles.buttonsRound}>
+            <TextButton
+              text="<"
+              onPress={() => {
+                if (selectedRound > 1) setSelectedRound(selectedRound - 1);
+              }}
+              style={styles}
+            />
+
+            <TextButton
+              text=">"
+              onPress={() => {
+                if (selectedRound < lastRound) setSelectedRound(selectedRound + 1);
+              }}
+              style={styles}
+            />
+          </View>
+          <Round league={selectedValue} season={selectedSeason} round={selectedRound} />
         </View>
       ) : (
         <Text>{single.noData}</Text>

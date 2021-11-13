@@ -11,7 +11,7 @@ export const Table = ({ league, season }) => {
   });
 
   return (
-    <View>
+    <View style={styles.nextTable}>
       <Text>
         Tabela {league} {season}
       </Text>

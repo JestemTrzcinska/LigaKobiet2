@@ -7,7 +7,7 @@ import { games } from '../hardCodingDb/games';
 
 export const Round = ({ league, season, round, last = false }) => {
   return (
-    <View style={styles.nextTable}>
+    <View>
       {last ? <Text>Ostatnia ({round}.) kolejka</Text> : <Text>{round}. kolejka</Text>}
       <FlatList
         data={games

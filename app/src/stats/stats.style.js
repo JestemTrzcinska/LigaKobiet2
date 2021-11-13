@@ -28,6 +28,14 @@ export const styles = StyleSheet.create({
     flex: 4,
   },
   nextTable: {
+    paddingBottom: 50,
+  },
+  buttonsRound: {
     paddingTop: 50,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  button: {
+    fontSize: 25,
   },
 });
