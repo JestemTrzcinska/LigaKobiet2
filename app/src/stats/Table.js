@@ -23,7 +23,7 @@ export const Table = ({ league, season }) => {
         <Text style={styles.item}>R</Text>
         <Text style={styles.item}>P</Text>
         <Text style={styles.item}>B</Text>
-        <Text style={styles.item}>PKT</Text>
+        <Text style={styles.item}>pkt</Text>
       </View>
 
       <FlatList
@@ -39,7 +39,9 @@ export const Table = ({ league, season }) => {
               <Text style={styles.item}>{item.won}</Text>
               <Text style={styles.item}>{item.draw}</Text>
               <Text style={styles.item}>{item.lost}</Text>
-              <Text style={styles.item}>{item.goalDiff}</Text>
+              <Text style={styles.item}>
+                {item.goalScored}:{item.goalLost}
+              </Text>
               <Text style={styles.item}>{item.points}</Text>
             </View>
           );
