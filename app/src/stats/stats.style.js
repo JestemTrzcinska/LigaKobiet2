@@ -30,10 +30,13 @@ export const styles = StyleSheet.create({
   nextTable: {
     paddingBottom: 50,
   },
+  lastTable: {
+    paddingTop: 50,
+  },
   buttonsRound: {
     paddingTop: 50,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
   button: {
     fontSize: 25,

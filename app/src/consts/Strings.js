@@ -35,4 +35,5 @@ export const profile = {
 export const single = {
   newsItem: 'Artykuł',
   noData: 'Ups! Nie ma tutaj informacji na ten temat...',
+  queens: 'Królowe strzelczyń',
 };
