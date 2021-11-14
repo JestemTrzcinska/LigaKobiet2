@@ -16,9 +16,7 @@ export const Table = ({ league, season }) => {
 
   return (
     <View style={styles.nextTable}>
-      <Text>
-        Tabela {league} {season}
-      </Text>
+      <Text>Tabela</Text>
       <View style={styles.table}>
         <Text style={styles.item}>Lp</Text>
         <Text style={styles.name}>Team</Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, Text } from 'react-native';
 import Containter from '../Container';
 
 export const NewsItem = ({ route }) => {

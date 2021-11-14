@@ -5,7 +5,7 @@ import { TextButton } from '../consts/Buttons';
 import { styles, placeholderColor } from './loginRegister.style';
 import { placeholder, buttons, menu } from '../consts/strings';
 
-export const Register = ({ navigation, route }) => {
+export const Register = ({ navigation }) => {
   const [firstName, onChangeFirstName] = useState('');
   const [lastName, onChangeLastName] = useState('');
   const [email, onChangeEmail] = useState('');

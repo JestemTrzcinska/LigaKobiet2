@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, StyleSheet, TouchableOpacity, Alert, Dimensions } from 'react-native';
+import { Image, Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Containter from '../Container';
 
 import { single } from '../consts/strings';

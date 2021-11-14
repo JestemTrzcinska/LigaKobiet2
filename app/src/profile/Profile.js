@@ -9,7 +9,7 @@ import { profileDB } from '../hardCodingDb/profile';
 
 import { styles } from './Profile.style';
 
-export const Profile = ({ navigation, route }) => {
+export const Profile = ({ navigation }) => {
   return (
     <Containter>
       <View style={styles.top}>
