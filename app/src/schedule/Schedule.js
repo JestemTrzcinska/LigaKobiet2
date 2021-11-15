@@ -1,4 +1,4 @@
-import React, { isValidElement, useState } from 'react';
+import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import Containter from '../Container';
 import { Calendar } from 'react-native-calendars';
@@ -21,19 +21,18 @@ const liga3 = { key: '3 liga zachodniopomorska', color: 'black' };
 
 const markedDates = {};
 
-// set dots in calendar
-games.map((item) => {
-  const date = new Date(item.date);
-  const rigthFormatDate = `${date.getFullYear()}-${
+const returnRigthFormatDate = (date) => {
+  return `${date.getFullYear()}-${
     date.getMonth().toString().length === 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
   }-${date.getDate().toString().length === 1 ? `0${date.getDate()}` : date.getDate()}`;
+};
+
+// set dots in calendar
+games.map((item) => {
+  const rigthFormatDate = returnRigthFormatDate(new Date(item.date));
 
   // check if in the markedDates is already the date that the game(item) is
-  if (
-    Object.entries(markedDates).some((i) => {
-      return i[0] == rigthFormatDate;
-    })
-  ) {
+  if (markedDates[rigthFormatDate]) {
     const allLeaguesInMarkedDate = Object.entries(markedDates[rigthFormatDate].dots).map((item) => {
       return item[1].key;
     });
@@ -90,8 +89,7 @@ export const Schedule = ({ navigation, route }) => {
       <Calendar
         style={styles.calendar}
         onDayPress={(day) => {
-          const y = day.dateString;
-          setDaySelected(y);
+          setDaySelected(day.dateString);
         }}
         onDayLongPress={(day) => {
           console.log('selected day', day);
@@ -113,7 +111,7 @@ export const Schedule = ({ navigation, route }) => {
             <TextName styles={styles.league}>{item.league}</TextName>
             <TextName styles={styles.name}>{item.home}</TextName>
             <Text style={styles.score}>
-              {item.isFinished ? `${item.scoreHome}` : '-'} : {item.isFinished ? `${item.scoreAway}` : '-'}
+              {item.isFinished ? item.scoreHome : '-'} : {item.isFinished ? item.scoreAway : '-'}
             </Text>
             <TextName styles={styles.name}>{item.away}</TextName>
           </View>
