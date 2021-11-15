@@ -23,9 +23,20 @@ export const Stats = ({ navigation, route }) => {
     return item.league == selectedValue && item.season == selectedSeason && item.isFinished == true;
   });
 
-  const lastRound = Math.max.apply(
+  const lastFinishedRound = Math.max.apply(
     Math,
     rigthLeagueAndSeasonFinishedGames.map(function (o) {
+      return o.round;
+    }),
+  );
+
+  const rigthLeagueAndSeason = games.filter((item) => {
+    return item.league == selectedValue && item.season == selectedSeason;
+  });
+
+  const lastRound = Math.max.apply(
+    Math,
+    rigthLeagueAndSeason.map(function (o) {
       return o.round;
     }),
   );
@@ -33,8 +44,12 @@ export const Stats = ({ navigation, route }) => {
   return (
     <Containter>
       <ScrollView nestedScrollEnabled scrollEnabled>
-        {selectedLastRound ? null : setSelectedLastRound(lastRound)}
-        {selectedLastRound ? null : lastRound == 1 ? setSelectedRound(lastRound) : setSelectedRound(lastRound - 1)}
+        {selectedLastRound ? null : setSelectedLastRound(lastFinishedRound)}
+        {selectedLastRound
+          ? null
+          : lastFinishedRound == 1
+          ? setSelectedRound(lastFinishedRound)
+          : setSelectedRound(lastFinishedRound - 1)}
 
         <View style={styles.top}>
           <Picker
@@ -57,10 +72,10 @@ export const Stats = ({ navigation, route }) => {
           </Picker>
         </View>
 
-        {lastRound > -1 ? (
+        {lastFinishedRound > -1 ? (
           <>
             <Table league={selectedValue} season={selectedSeason} />
-            <Round league={selectedValue} season={selectedSeason} round={lastRound} last={true} />
+            <Round league={selectedValue} season={selectedSeason} round={lastFinishedRound} last={true} />
 
             <View style={styles.buttonsRound}>
               <Text style={styles.button}>{selectedRound}. kolejka</Text>
