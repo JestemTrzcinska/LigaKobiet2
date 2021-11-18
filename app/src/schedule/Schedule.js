@@ -16,8 +16,8 @@ const showDayGame = (date) => {
 
 const ekstraliga = { key: 'Ekstraliga', color: 'chartreuse' };
 const liga1 = { key: '1 liga', color: 'red' };
-const liga2 = { key: '2 liga', color: 'gold' };
-const liga3 = { key: '3 liga zachodniopomorska', color: 'black' };
+const liga2 = { key: '2 liga', color: 'white' };
+const liga3 = { key: '3 liga zachodniopomorska', color: 'blue' };
 
 const markedDates = {};
 
@@ -87,6 +87,14 @@ export const Schedule = ({ navigation, route }) => {
   return (
     <Containter>
       <Calendar
+        theme={{
+          backgroundColor: 'transparent',
+          calendarBackground: 'transparent',
+          dayTextColor: 'white',
+          textDisabledColor: '#999',
+          monthTextColor: 'white',
+          todayTextColor: 'black',
+        }}
         style={styles.calendar}
         onDayPress={(day) => {
           setDaySelected(day.dateString);

@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   description: {
+    color: 'white',
     fontSize: 20,
-    color: 'black',
     textAlign: 'justify',
   },
 });

@@ -18,7 +18,7 @@ export const Round = ({ league, season, round, last = false }) => {
 
   return (
     <View>
-      {last ? <Text>Ostatnia ({round}.) kolejka</Text> : null}
+      {last ? <Text style={styles.text}>Ostatnia ({round}.) kolejka</Text> : null}
       {currentGames.length > 0 ? (
         currentGames.map((item, index) => {
           return (
@@ -37,7 +37,7 @@ export const Round = ({ league, season, round, last = false }) => {
           );
         })
       ) : (
-        <Text>{single.noData}</Text>
+        <Text style={styles.text}>{single.noData}</Text>
       )}
     </View>
   );

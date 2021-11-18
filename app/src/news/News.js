@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { Image, Text, View, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import Containter from '../Container';
 
 import { single } from '../consts/strings';
@@ -9,7 +9,7 @@ import { news } from '../hardCodingDb/news';
 export const News = ({ navigation, route }) => {
   return (
     <Containter>
-      <View style={styles.view}>
+      <ScrollView style={styles.view}>
         {news.map((item) => {
           return (
             <TouchableOpacity
@@ -25,7 +25,7 @@ export const News = ({ navigation, route }) => {
             </TouchableOpacity>
           );
         })}
-      </View>
+      </ScrollView>
     </Containter>
   );
 };

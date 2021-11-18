@@ -58,7 +58,7 @@ export const Stats = ({ navigation, route }) => {
             onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             mode="dropdown">
             {leagues.map((league, index) => {
-              return <Picker.Item label={league.name} value={league.name} key={index} />;
+              return <Picker.Item color="white" label={league.name} value={league.name} key={index} />;
             })}
           </Picker>
 
@@ -67,7 +67,7 @@ export const Stats = ({ navigation, route }) => {
             style={styles.season}
             onValueChange={(itemValue, itemIndex) => setSelectedSeason(itemValue)}>
             {seasons.map((item, index) => {
-              return <Picker.Item label={item.date} value={item.date} key={index} />;
+              return <Picker.Item color="white" label={item.date} value={item.date} key={index} />;
             })}
           </Picker>
         </View>
@@ -99,7 +99,7 @@ export const Stats = ({ navigation, route }) => {
             <Queens league={selectedValue} season={selectedSeason} />
           </>
         ) : (
-          <Text>{single.noData}</Text>
+          <Text style={styles.text}>{single.noData}</Text>
         )}
       </ScrollView>
     </Containter>

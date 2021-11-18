@@ -27,7 +27,7 @@ export const Queens = ({ league, season }) => {
 
   return (
     <View style={styles.lastTable}>
-      <Text>{single.queens}</Text>
+      <Text style={styles.text}>{single.queens}</Text>
       {summaryArray
         .sort((a, b) => {
           return b.goals - a.goals;

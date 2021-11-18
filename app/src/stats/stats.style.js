@@ -5,10 +5,10 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   league: {
-    width: 200,
+    width: 180,
   },
   season: {
-    width: 120,
+    width: 180,
   },
   table: {
     flexDirection: 'row',
@@ -16,16 +16,21 @@ export const styles = StyleSheet.create({
   },
   name: {
     flex: 6,
+    color: 'white',
   },
   item: {
+    color: 'white',
     flex: 1,
     textAlign: 'center',
   },
   score: {
+    color: 'white',
     flex: 2,
   },
   date: {
-    flex: 4,
+    flex: 3,
+    color: 'white',
+    textAlign: 'center',
   },
   nextTable: {
     paddingBottom: 50,
@@ -39,6 +44,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   button: {
+    color: 'white',
     fontSize: 25,
+  },
+  text: {
+    color: 'white',
   },
 });
