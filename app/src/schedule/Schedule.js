@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import Containter from '../Container';
 import { Calendar } from 'react-native-calendars';
-import { TextName } from '../consts/Text';
+import { TextName, TextWhite } from '../consts/Text';
 
 import { styles } from './schedule.style';
 
 import { games } from '../hardCodingDb/games';
 
 const showDayGame = (date) => {
-  return games.filter((item) => {
-    return new Date(item.date).toDateString() == new Date(date).toDateString();
-  });
+  return Object.values(
+    games
+      // only the ones that are today
+      .filter((item) => {
+        return new Date(item.date).toDateString() == new Date(date).toDateString();
+      })
+      // sort by date
+      .sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      })
+      // sort by league
+      .reduce((acc, item) => {
+        if (!acc[item.league])
+          acc[item.league] = {
+            league: item.league,
+            items: [],
+          };
+        acc[item.league].items.push(item);
+        return acc;
+      }, {}),
+  );
 };
 
 const getMonthFormat = (monthNumber) => {
@@ -25,6 +43,7 @@ const liga3 = { key: '3 liga zachodniopomorska', color: 'blue' };
 
 const markedDates = {};
 
+// right format for markedDate
 const returnRightFormatDate = (date) => {
   const day = date.getDate().toString().length === 1 ? `0${date.getDate()}` : date.getDate();
   const month = getMonthFormat(date.getMonth());
@@ -32,11 +51,11 @@ const returnRightFormatDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-// set dots in calendar
+// set dots in calendar - 3 month at a time
 const applyDotsByMonth = (lastDayOfMonth) => {
   var date = new Date(lastDayOfMonth);
-  var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-  var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+  var lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
 
   const thisMonthGames = games.filter((item) => {
     if (new Date(item.date) > firstDay && new Date(item.date) < lastDay) {
@@ -97,29 +116,34 @@ const applyDotsByMonth = (lastDayOfMonth) => {
 };
 
 const options = { day: 'numeric', month: 'long', year: 'numeric' };
+const calendarTheme = {
+  backgroundColor: 'transparent',
+  calendarBackground: 'transparent',
+  dayTextColor: 'white',
+  textDisabledColor: '#999',
+  monthTextColor: 'white',
+  todayTextColor: '#1C0C5B',
+};
+
+// use effect
+applyDotsByMonth(new Date());
 
 export const Schedule = ({ navigation, route }) => {
   const [daySelected, setDaySelected] = useState(new Date());
-  const [lastDayOfMonth, setLastDayOfMonth] = useState(new Date());
 
   return (
     <Containter>
-      {applyDotsByMonth(lastDayOfMonth)}
       <Calendar
-        theme={{
-          backgroundColor: 'transparent',
-          calendarBackground: 'transparent',
-          dayTextColor: 'white',
-          textDisabledColor: '#999',
-          monthTextColor: 'white',
-          todayTextColor: 'black',
-        }}
+        theme={calendarTheme}
         style={styles.calendar}
         onDayPress={(day) => {
-          setDaySelected(day.dateString);
+          setDaySelected(new Date(day.dateString));
+        }}
+        onLongPress={(day) => {
+          setDaySelected(new Date(day.dateString));
         }}
         onMonthChange={(month) => {
-          setLastDayOfMonth(month.dateString);
+          applyDotsByMonth(new Date(month.dateString));
         }}
         firstDay={1}
         disableAllTouchEventsForDisabledDays={true}
@@ -128,16 +152,25 @@ export const Schedule = ({ navigation, route }) => {
         markedDates={markedDates}
       />
 
-      <Text style={styles.info}>{new Date(daySelected).toLocaleDateString('pl', options)}</Text>
+      <TextWhite style={styles.info}>{new Date(daySelected).toLocaleDateString('pl', options)}</TextWhite>
       {showDayGame(daySelected).map((item, index) => {
         return (
           <View style={styles.top} key={index}>
-            <TextName styles={styles.league}>{item.league}</TextName>
-            <TextName styles={styles.name}>{item.home}</TextName>
-            <Text style={styles.score}>
-              {item.isFinished ? item.scoreHome : '-'} : {item.isFinished ? item.scoreAway : '-'}
-            </Text>
-            <TextName styles={styles.name}>{item.away}</TextName>
+            <TextName style={styles.league}>{item.league}</TextName>
+            <View>
+              {item.items.map((item2, index2) => {
+                return (
+                  <View style={styles.games} key={index2}>
+                    <TextName style={styles.name}>{item2.home}</TextName>
+                    <TextWhite style={styles.score}>
+                      {item2.isFinished ? item2.scoreHome : '-'} : {item2.isFinished ? item2.scoreAway : '-'}
+                    </TextWhite>
+                    <TextName style={styles.name}>{item2.away}</TextName>
+                    <TextWhite style={styles.date}>{item2.date.split(' ')[1]}</TextWhite>
+                  </View>
+                );
+              })}
+            </View>
           </View>
         );
       })}
