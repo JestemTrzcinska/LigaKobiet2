@@ -1,30 +1,37 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  top: {
-    flexDirection: 'row',
-  },
   calendar: {
     marginTop: 70,
     borderRadius: 30,
-    backgroundColor: 'rgba(253, 112, 20,0.7)',
+    backgroundColor: '#916BBF',
   },
   info: {
-    color: 'white',
     fontSize: 20,
     paddingTop: 40,
     paddingBottom: 10,
   },
+  top: {
+    paddingVertical: 8,
+  },
+  games: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 3,
+  },
   league: {
-    color: 'white',
-    flex: 3,
+    fontSize: 15,
+    fontWeight: 'bold',
+    paddingBottom: 5,
   },
   name: {
-    color: 'white',
-    flex: 5,
+    flex: 6,
   },
   score: {
-    color: 'white',
+    flex: 2,
+    textAlign: 'center',
+  },
+  date: {
     flex: 1.5,
     textAlign: 'center',
   },
