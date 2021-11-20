@@ -7,6 +7,7 @@ import { TextName, TextWhite } from '../consts/Text';
 
 import { styles } from './schedule.style';
 import { optionsLong } from '../consts/options';
+import { single } from '../consts/strings';
 
 import { games } from '../hardCodingDb/games';
 
@@ -155,14 +156,18 @@ export const Schedule = ({ navigation, route }) => {
       />
 
       <TextWhite style={styles.info}>{new Date(daySelected).toLocaleDateString('pl', optionsLong)}</TextWhite>
-      {showDayGame(daySelected).map((item, index) => {
-        return (
-          <View style={styles.top} key={index}>
-            <TextName style={styles.league}>{item.league}</TextName>
-            <GameItem items={item.items} navigation={navigation} />
-          </View>
-        );
-      })}
+      {showDayGame(daySelected).length > 0 ? (
+        showDayGame(daySelected).map((item, index) => {
+          return (
+            <View style={styles.top} key={index}>
+              <TextName style={styles.league}>{item.league}</TextName>
+              <GameItem items={item.items} navigation={navigation} />
+            </View>
+          );
+        })
+      ) : (
+        <TextWhite>{single.noGames}</TextWhite>
+      )}
     </Containter>
   );
 };
