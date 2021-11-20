@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://admin:admin@ligakobiet.p8lqw.mongodb.net/test?retryWrites=true&w=majority"
+}
