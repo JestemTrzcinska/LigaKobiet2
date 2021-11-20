@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   top: {
@@ -16,20 +16,17 @@ export const styles = StyleSheet.create({
   },
   name: {
     flex: 6,
-    color: 'white',
-  },
-  item: {
-    color: 'white',
-    flex: 1,
-    textAlign: 'center',
   },
   score: {
-    color: 'white',
     flex: 2,
+    textAlign: 'center',
   },
   date: {
     flex: 3,
-    color: 'white',
+    textAlign: 'center',
+  },
+  item: {
+    flex: 1,
     textAlign: 'center',
   },
   nextTable: {
@@ -44,10 +41,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   button: {
-    color: 'white',
-    fontSize: 25,
+    fontSize: 20,
   },
   text: {
-    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingBottom: 5,
   },
 });

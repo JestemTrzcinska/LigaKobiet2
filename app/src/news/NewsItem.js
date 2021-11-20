@@ -1,41 +1,18 @@
 import React from 'react';
-import { Dimensions, Image, ScrollView, StyleSheet, Text } from 'react-native';
+import { Image, ScrollView } from 'react-native';
+import { TextWhite } from '../consts/Text';
 import Containter from '../Container';
+import { styles } from './news.style';
 
 export const NewsItem = ({ route }) => {
   const { index, title, description, image } = route.params.item;
   return (
     <Containter>
       <ScrollView style={styles.view}>
-        <Image source={{ uri: image }} style={styles.image} />
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
+        <Image source={{ uri: image }} style={styles.imageItem} />
+        <TextWhite style={styles.titleItem}>{title}</TextWhite>
+        <TextWhite style={styles.description}>{description}</TextWhite>
       </ScrollView>
     </Containter>
   );
 };
-
-const styles = StyleSheet.create({
-  view: {
-    marginTop: 10,
-  },
-  image: {
-    width: Dimensions.get('window').width - 40,
-    height: 200,
-    alignItems: 'center',
-  },
-  title: {
-    marginVertical: 10,
-    fontSize: 28,
-    color: 'white',
-    fontWeight: 'bold',
-    // position: 'absolute',
-    // bottom: 0, // for image with title
-    textAlign: 'center',
-  },
-  description: {
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'justify',
-  },
-});

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, Text, View, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { Image, View, ScrollView, TouchableOpacity } from 'react-native';
 import Containter from '../Container';
-
+import { TextWhite } from '../consts/Text';
+import { styles } from './news.style';
 import { single } from '../consts/strings';
 
 import { news } from '../hardCodingDb/news';
@@ -14,14 +15,21 @@ export const News = ({ navigation, route }) => {
           return (
             <TouchableOpacity
               key={item.index}
-              style={styles.card}
               onPress={() => {
                 navigation.navigate(single.newsItem, { item });
-              }}>
-              <Image source={{ uri: item.image }} style={styles.image} />
-              <Text numberOfLines={4} style={styles.title}>
-                {item.title}
-              </Text>
+              }}
+              style={styles.wrap}>
+              <View style={styles.card}>
+                <Image source={{ uri: item.image }} style={styles.image} />
+              </View>
+              <View style={styles.texts}>
+                <TextWhite numberOfLines={2} style={styles.title}>
+                  {item.title}
+                </TextWhite>
+                <TextWhite numberOfLines={3} style={styles.text}>
+                  {item.description}
+                </TextWhite>
+              </View>
             </TouchableOpacity>
           );
         })}
@@ -29,28 +37,3 @@ export const News = ({ navigation, route }) => {
     </Containter>
   );
 };
-
-const styles = StyleSheet.create({
-  view: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 10,
-  },
-  card: {
-    width: Dimensions.get('window').width - 40,
-    height: 110,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 20,
-  },
-  title: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
-    position: 'absolute',
-    right: 0,
-    width: Dimensions.get('window').width - 40 - 105,
-  },
-});

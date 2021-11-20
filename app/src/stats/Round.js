@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { TextName } from '../consts/Text';
+import { View } from 'react-native';
+import { TextName, TextWhite } from '../consts/Text';
 
 import { styles } from './stats.style';
 
@@ -18,26 +18,22 @@ export const Round = ({ league, season, round, last = false }) => {
 
   return (
     <View>
-      {last ? <Text style={styles.text}>Ostatnia ({round}.) kolejka</Text> : null}
+      {last ? <TextWhite style={styles.text}>Ostatnia ({round}.) kolejka</TextWhite> : null}
       {currentGames.length > 0 ? (
         currentGames.map((item, index) => {
           return (
             <View style={styles.table} key={index}>
               <TextName styles={styles.name}>{item.home}</TextName>
-              {item.isFinished ? (
-                <Text style={styles.score}>
-                  {item.scoreHome} : {item.scoreAway}
-                </Text>
-              ) : (
-                <Text style={styles.score}>- : -</Text>
-              )}
+              <TextWhite style={styles.score}>
+                {item.isFinished ? `${item.scoreHome} : ${item.scoreAway}` : '- : -'}
+              </TextWhite>
               <TextName styles={styles.name}>{item.away}</TextName>
-              <Text style={styles.date}>{item.date}</Text>
+              <TextWhite style={styles.date}>{item.date}</TextWhite>
             </View>
           );
         })
       ) : (
-        <Text style={styles.text}>{single.noData}</Text>
+        <TextWhite>{single.noData}</TextWhite>
       )}
     </View>
   );

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Alert, Text, View, TextInput } from 'react-native';
+import { Alert, View } from 'react-native';
 import Containter from '../Container';
 
 import { TextButton } from '../consts/Buttons';
+import { TextInputWhite, TextWhite } from '../consts/Text';
 import { buttons, profile } from '../consts/strings';
 
 import { profileDB } from '../hardCodingDb/profile';
 
-import { styles, placeholderColor } from './Profile.style';
+import { styles } from './Profile.style';
 
 export const EditProfile = ({ navigation, route }) => {
   const [favTeam, setFavTeam] = useState(profileDB.favTeam); // profile.favTeam
@@ -17,31 +18,28 @@ export const EditProfile = ({ navigation, route }) => {
   return (
     <Containter>
       <View style={styles.top}>
-        <Text style={styles.text}>{profile.favTeam}</Text>
-        <TextInput
+        <TextWhite style={[styles.title, styles.titleEdit]}>{profile.favTeam}</TextWhite>
+        <TextInputWhite
           style={styles.input}
           onChangeText={setFavTeam}
           value={favTeam}
           placeholder={profile.favTeam}
-          placeholderTextColor={placeholderColor}
           multiline={true}
         />
-        <Text style={styles.text}>{profile.city}</Text>
-        <TextInput
+        <TextWhite style={[styles.title, styles.titleEdit]}>{profile.city}</TextWhite>
+        <TextInputWhite
           style={styles.input}
           onChangeText={setCity}
           value={city}
           placeholder={profile.city}
-          placeholderTextColor={placeholderColor}
           multiline={true}
         />
-        <Text style={styles.text}>{profile.about}</Text>
-        <TextInput
-          style={[styles.input, styles.biggerInput]}
+        <TextWhite style={[styles.title, styles.titleEdit]}>{profile.about}</TextWhite>
+        <TextInputWhite
+          style={styles.input}
           onChangeText={setAbout}
           value={about}
           placeholder={profile.about}
-          placeholderTextColor={placeholderColor}
           multiline={true}
         />
       </View>

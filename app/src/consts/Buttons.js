@@ -7,7 +7,7 @@ export const TextButtonNav = ({ text, navigation, dir, style }) => {
       onPress={() => {
         navigation.navigate(dir, { name: text });
       }}>
-      <Text style={[styles.textStyle, style.optionButton]}>{text}</Text>
+      <Text style={[styles.textStyle, style]}>{text}</Text>
     </TouchableOpacity>
   );
 };

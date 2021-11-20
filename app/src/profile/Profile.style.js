@@ -5,22 +5,21 @@ export const styles = StyleSheet.create({
     flex: 6,
     justifyContent: 'center',
   },
-  text: {
-    color: 'white',
+  titleEdit: {
     padding: 10,
+  },
+  title: {
     fontWeight: 'bold',
-    color: 'white',
     fontSize: 20,
   },
+  text: {
+    paddingBottom: 20,
+    paddingTop: 5,
+  },
   input: {
-    height: 40,
     marginHorizontal: 10,
     borderWidth: 1,
     padding: 10,
-    paddingTop: 10,
-  },
-  biggerInput: {
-    height: 100,
     paddingTop: 10,
   },
   button: {
@@ -33,5 +32,3 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export const placeholderColor = 'white';

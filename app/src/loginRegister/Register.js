@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Text, TextInput, Alert, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import Containter from '../Container';
 import { TextButton } from '../consts/Buttons';
-import { styles, placeholderColor } from './loginRegister.style';
+import { TextInputWhite, TextWhite } from '../consts/Text';
+import { styles } from './loginRegister.style';
 import { placeholder, buttons, menu } from '../consts/strings';
 
 export const Register = ({ navigation }) => {
@@ -15,40 +16,35 @@ export const Register = ({ navigation }) => {
   return (
     <Containter>
       <View style={styles.top}>
-        <TextInput
+        <TextInputWhite
           style={styles.input}
           onChangeText={onChangeFirstName}
           value={firstName}
           placeholder={placeholder.firstName}
-          placeholderTextColor={placeholderColor}
         />
-        <TextInput
+        <TextInputWhite
           style={styles.input}
           onChangeText={onChangeLastName}
           value={lastName}
           placeholder={placeholder.lastName}
-          placeholderTextColor={placeholderColor}
         />
-        <TextInput
+        <TextInputWhite
           style={styles.input}
           onChangeText={onChangeEmail}
           value={email}
           placeholder={placeholder.email}
-          placeholderTextColor={placeholderColor}
         />
-        <TextInput
+        <TextInputWhite
           style={styles.input}
           onChangeText={onChangePassword}
           value={password}
           placeholder={placeholder.password}
-          placeholderTextColor={placeholderColor}
         />
-        <TextInput
+        <TextInputWhite
           style={styles.input}
           onChangeText={onChangePassword2}
           value={password2}
           placeholder={placeholder.password2}
-          placeholderTextColor={placeholderColor}
         />
         <TextButton
           style={styles}
@@ -59,7 +55,7 @@ export const Register = ({ navigation }) => {
         />
       </View>
       <View style={styles.bottom}>
-        <Text style={styles.bottomText}>{buttons.alreadyHaveAnAccount}</Text>
+        <TextWhite style={styles.bottomText}>{buttons.alreadyHaveAnAccount}</TextWhite>
 
         <TextButton
           style={styles}

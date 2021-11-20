@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { TextWhite } from '../consts/Text';
 
 import { styles } from './stats.style';
 
@@ -27,7 +28,7 @@ export const Queens = ({ league, season }) => {
 
   return (
     <View style={styles.lastTable}>
-      <Text style={styles.text}>{single.queens}</Text>
+      <TextWhite style={styles.text}>{single.queens}</TextWhite>
       {summaryArray
         .sort((a, b) => {
           return b.goals - a.goals;
@@ -36,21 +37,17 @@ export const Queens = ({ league, season }) => {
         .map((item, index) => {
           return (
             <View style={styles.table} key={index}>
-              <Text styles={styles.item}>{index + 1}. </Text>
-              <TextName styles={styles.name}>{item.name}</TextName>
-              <TextName styles={styles.name}>{item.club}</TextName>
-              <Text styles={styles.item}>{item.goals}</Text>
+              <TextWhite style={styles.item}>{index + 1}. </TextWhite>
+              <TextWhite style={styles.name} numberOfLines={1}>
+                {item.name}
+              </TextWhite>
+              <TextWhite style={styles.name} numberOfLines={1}>
+                {item.club}
+              </TextWhite>
+              <TextWhite style={styles.item}>{item.goals}</TextWhite>
             </View>
           );
         })}
     </View>
-  );
-};
-
-const TextName = ({ children, styles }) => {
-  return (
-    <Text style={styles} numberOfLines={1}>
-      {children}
-    </Text>
   );
 };

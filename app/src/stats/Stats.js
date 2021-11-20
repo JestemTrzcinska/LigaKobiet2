@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Containter from '../Container';
+import { TextButton } from '../consts/Buttons';
+import { TextWhite } from '../consts/Text';
 import { Table } from './Table';
 import { Round } from './Round';
-import { TextButton } from '../consts/Buttons';
 import { Queens } from './Queens';
 
 import { styles } from './stats.style';
@@ -78,7 +79,7 @@ export const Stats = ({ navigation, route }) => {
             <Round league={selectedValue} season={selectedSeason} round={lastFinishedRound} last={true} />
 
             <View style={styles.buttonsRound}>
-              <Text style={styles.button}>{selectedRound}. kolejka</Text>
+              <TextWhite style={styles.text}>{selectedRound}. kolejka</TextWhite>
               <TextButton
                 text="<"
                 onPress={() => {

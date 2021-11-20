@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import Containter from '../Container';
 import { Calendar } from 'react-native-calendars';
 import { TextName, TextWhite } from '../consts/Text';
@@ -122,7 +122,8 @@ const calendarTheme = {
   dayTextColor: 'white',
   textDisabledColor: '#999',
   monthTextColor: 'white',
-  todayTextColor: '#1C0C5B',
+  todayTextColor: 'black',
+  arrowColor: '#1C0C5B',
 };
 
 // use effect
