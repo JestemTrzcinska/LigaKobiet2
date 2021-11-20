@@ -8,20 +8,20 @@ import { styles } from './schedule.style';
 export const GameItem = ({ items, navigation }) => {
   return (
     <View>
-      {items.map((item2, index2) => {
+      {items.map((item, index) => {
         return (
           <TouchableOpacity
             style={styles.games}
-            key={index2}
+            key={index}
             onPress={() => {
-              navigation.navigate(game.game, { item2, name: item2.league });
+              navigation.navigate(game.game, { item, name: item.league });
             }}>
-            <TextName style={styles.name}>{item2.home}</TextName>
+            <TextName style={styles.name}>{item.home}</TextName>
             <TextWhite style={styles.score}>
-              {item2.isFinished ? item2.scoreHome : '-'} : {item2.isFinished ? item2.scoreAway : '-'}
+              {item.isFinished ? item.scoreHome : '-'} : {item.isFinished ? item.scoreAway : '-'}
             </TextWhite>
-            <TextName style={styles.name}>{item2.away}</TextName>
-            <TextWhite style={styles.date}>{item2.date.split(' ')[1]}</TextWhite>
+            <TextName style={styles.name}>{item.away}</TextName>
+            <TextWhite style={styles.date}>{item.date.split(' ')[1]}</TextWhite>
           </TouchableOpacity>
         );
       })}

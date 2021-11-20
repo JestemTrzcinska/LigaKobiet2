@@ -76,7 +76,13 @@ export const Stats = ({ navigation, route }) => {
         {lastFinishedRound > -1 ? (
           <>
             <Table league={selectedValue} season={selectedSeason} />
-            <Round league={selectedValue} season={selectedSeason} round={lastFinishedRound} last={true} />
+            <Round
+              navigation={navigation}
+              league={selectedValue}
+              season={selectedSeason}
+              round={lastFinishedRound}
+              last={true}
+            />
 
             <View style={styles.buttonsRound}>
               <TextWhite style={styles.text}>{selectedRound}. kolejka</TextWhite>
@@ -96,7 +102,7 @@ export const Stats = ({ navigation, route }) => {
                 style={styles}
               />
             </View>
-            <Round league={selectedValue} season={selectedSeason} round={selectedRound} />
+            <Round navigation={navigation} league={selectedValue} season={selectedSeason} round={selectedRound} />
             <Queens league={selectedValue} season={selectedSeason} />
           </>
         ) : (

@@ -9,7 +9,7 @@ import { styles } from './game.style';
 
 export const Game = ({ route }) => {
   const { home, logoHome, away, logoAway, scoreAway, scoreHome, date, round, league, season, isFinished } =
-    route.params.item2;
+    route.params.item;
   return (
     <Container>
       <ScrollView>
