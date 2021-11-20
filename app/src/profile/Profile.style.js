@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleEdit: {
-    padding: 10,
+    paddingVertical: 10,
   },
   title: {
     fontWeight: 'bold',
@@ -17,7 +17,6 @@ export const styles = StyleSheet.create({
     paddingTop: 5,
   },
   input: {
-    marginHorizontal: 10,
     borderWidth: 1,
     padding: 10,
     paddingTop: 10,
