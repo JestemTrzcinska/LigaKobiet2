@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import Containter from '../Container';
 import { Calendar } from 'react-native-calendars';
+import { GameItem } from './GameItem';
 import { TextName, TextWhite } from '../consts/Text';
 
 import { styles } from './schedule.style';
+import { optionsLong } from '../consts/options';
 
 import { games } from '../hardCodingDb/games';
 
@@ -115,7 +117,6 @@ const applyDotsByMonth = (lastDayOfMonth) => {
   });
 };
 
-const options = { day: 'numeric', month: 'long', year: 'numeric' };
 const calendarTheme = {
   backgroundColor: 'transparent',
   calendarBackground: 'transparent',
@@ -153,25 +154,12 @@ export const Schedule = ({ navigation, route }) => {
         markedDates={markedDates}
       />
 
-      <TextWhite style={styles.info}>{new Date(daySelected).toLocaleDateString('pl', options)}</TextWhite>
+      <TextWhite style={styles.info}>{new Date(daySelected).toLocaleDateString('pl', optionsLong)}</TextWhite>
       {showDayGame(daySelected).map((item, index) => {
         return (
           <View style={styles.top} key={index}>
             <TextName style={styles.league}>{item.league}</TextName>
-            <View>
-              {item.items.map((item2, index2) => {
-                return (
-                  <View style={styles.games} key={index2}>
-                    <TextName style={styles.name}>{item2.home}</TextName>
-                    <TextWhite style={styles.score}>
-                      {item2.isFinished ? item2.scoreHome : '-'} : {item2.isFinished ? item2.scoreAway : '-'}
-                    </TextWhite>
-                    <TextName style={styles.name}>{item2.away}</TextName>
-                    <TextWhite style={styles.date}>{item2.date.split(' ')[1]}</TextWhite>
-                  </View>
-                );
-              })}
-            </View>
+            <GameItem items={item.items} navigation={navigation} />
           </View>
         );
       })}

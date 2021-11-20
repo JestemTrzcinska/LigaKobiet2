@@ -37,3 +37,10 @@ export const single = {
   noData: 'Ups! Nie ma tutaj informacji na ten temat...',
   queens: 'Aktualne królowe strzelczyń',
 };
+
+export const game = {
+  game: 'Mecz',
+  afterFinish: 'Informacje pojawią się po skończonym meczu',
+  scored: 'Bramki:',
+  info: 'Wydarzenia',
+};

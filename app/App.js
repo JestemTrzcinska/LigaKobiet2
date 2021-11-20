@@ -13,8 +13,9 @@ import { Register } from './src/loginRegister/Register';
 import { Profile } from './src/profile/Profile';
 import { EditProfile } from './src/profile/EditProfile';
 
-import { menu, single } from './src/consts/strings';
+import { game, menu, single } from './src/consts/strings';
 import { NewsItem } from './src/news/NewsItem';
+import { Game } from './src/game/Game';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,7 @@ const App = () => {
         <Stack.Screen name={menu.editProfile} component={EditProfile} />
 
         <Stack.Screen name={single.newsItem} component={NewsItem} />
+        <Stack.Screen name={game.game} component={Game} options={({ route }) => ({ title: route.params.name })} />
       </Stack.Navigator>
     </NavigationContainer>
   );
