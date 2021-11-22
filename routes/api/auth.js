@@ -33,7 +33,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() }); // bad request
+      return res.status(400).json({ errors: errors.array() });
     }
 
     const { email, password } = req.body;
@@ -60,6 +60,7 @@ router.post(
           id: user.id,
         },
       };
+
       jwt.sign(
         payload,
         config.get("jwtSecret"),

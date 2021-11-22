@@ -24,7 +24,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() }); // bad request
+      return res.status(400).json({ errors: errors.array() });
     }
 
     const { firstName, lastName, email, password } = req.body;
@@ -48,7 +48,8 @@ router.post(
       // Encrypt password
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
-      await user.save(); // in the db
+
+      await user.save();
 
       // Return jsonwebtoken
       const payload = {

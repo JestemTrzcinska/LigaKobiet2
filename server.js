@@ -7,6 +7,8 @@ const app = express();
 // Connect Database
 connectDb();
 
+app.use(express.json({ extended: false }));
+
 app.get("/", (req, res) => res.send("API RUnning"));
 
 // Define routes
