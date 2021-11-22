@@ -19,14 +19,15 @@ router.post(
 
     const { name } = req.body;
 
-    // See if the League exists
-    const leagueFromDB = await League.findOne({ name });
-    if (leagueFromDB) {
-      return res.status(400).json({
-        errors: [{ msg: "Taka liga już istnieje w bazie danych." }],
-      });
-    }
     try {
+      // See if the League exists
+      const leagueFromDB = await League.findOne({ name });
+      if (leagueFromDB) {
+        return res.status(400).json({
+          errors: [{ msg: "Taka liga już istnieje w bazie danych." }],
+        });
+      }
+
       // Create
       league = new League({ name });
 
