@@ -35,26 +35,28 @@ router.get("/me", auth, async (req, res) => {
 router.post("/", [auth], async (req, res) => {
   const { favClub, city, about } = req.body;
 
-  // Build profile object
-  const profileFields = {};
-  profileFields.user = req.user.id;
-  if (city) profileFields.city = city;
-  if (about) profileFields.about = about;
-
-  if (favClub) {
-    const clubFromDB = await Club.findOne({
-      name: favClub,
-    });
-
-    if (!clubFromDB) {
-      return res.status(400).json({
-        errors: [{ msg: "Klub o takiej nazwie nie istnieje w bazie danych." }],
-      });
-    }
-    profileFields.favClub = clubFromDB.id;
-  }
-
   try {
+    // Build profile object
+    const profileFields = {};
+    profileFields.user = req.user.id;
+    if (city) profileFields.city = city;
+    if (about) profileFields.about = about;
+
+    if (favClub) {
+      const clubFromDB = await Club.findOne({
+        name: favClub,
+      });
+
+      if (!clubFromDB) {
+        return res.status(400).json({
+          errors: [
+            { msg: "Klub o takiej nazwie nie istnieje w bazie danych." },
+          ],
+        });
+      }
+      profileFields.favClub = clubFromDB.id;
+    }
+
     let profile = await Profile.findOne({ user: req.user.id });
 
     if (profile) {
