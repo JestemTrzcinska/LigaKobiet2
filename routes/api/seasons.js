@@ -12,27 +12,33 @@ router.post(
   "/",
   [
     check("name", "Nazwa jest wymagana.").not().isEmpty(),
-    check("from", "Podanie daty jest wymagane.").not().isEmpty(),
-    check("to", "Podanie daty jest wymagane.").not().isEmpty(),
+    check("from", "Podanie daty 'od' jest wymagane.").not().isEmpty(),
+    check("to", "Podanie daty 'do' jest wymagane.").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() }); // bad request
+      return res.status(400).json({ errors: errors.array() });
     }
 
     const { name, from, to } = req.body;
 
-    // See if the Season exists
-    let seasonFromDB = await Season.findOne({ name, from, to });
-    if (seasonFromDB) {
+    if (new Date(from) >= new Date(to)) {
       return res.status(400).json({
-        errors: [{ msg: "Taki sezon już istnieje." }],
+        errors: [{ msg: "Data 'od' musi być przed datą 'po'." }],
       });
     }
-    try {
-      let season = await Season.findOne({ name });
 
+    try {
+      // See if the Season exists
+      let seasonFromDB = await Season.findOne({ name, from, to });
+      if (seasonFromDB) {
+        return res.status(400).json({
+          errors: [{ msg: "Taki sezon już istnieje." }],
+        });
+      }
+
+      let season = await Season.findOne({ name });
       if (season) {
         // Update
         const seasonUpdate = await Season.findOneAndUpdate(
@@ -91,7 +97,7 @@ router.get("/:seasonID", async (req, res) => {
   try {
     const season = await Season.findOne({ _id: req.params.seasonID });
 
-    if (season.length === 0) {
+    if (!season) {
       return res.status(404).json({
         errors: [{ msg: "Nie ma ani jednego sezonu w bazie danych." }],
       });
@@ -100,6 +106,11 @@ router.get("/:seasonID", async (req, res) => {
     res.json(season);
   } catch (err) {
     console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Sezonu nie znaleziono w bazie danych" }] });
+    }
     res.status(500).send("Server Error");
   }
 });
