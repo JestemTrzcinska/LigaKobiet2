@@ -16,11 +16,12 @@ router.get("/me", auth, async (req, res) => {
       .populate("user", ["firstName", "lastName", "isStaff"])
       .populate("favClub");
 
-    if (profile.length === 0) {
+    if (!profile) {
       return res
         .status(400)
         .json({ errors: [{ msg: "Ten użytkownik nie ma profilu" }] });
     }
+
     res.json(profile);
   } catch (err) {
     console.error(err.message);
@@ -32,11 +33,6 @@ router.get("/me", auth, async (req, res) => {
 // @desc      Create or Update user profile
 // @access    Private
 router.post("/", [auth], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   const { favClub, city, about } = req.body;
 
   // Build profile object
@@ -49,6 +45,7 @@ router.post("/", [auth], async (req, res) => {
     const clubFromDB = await Club.findOne({
       name: favClub,
     });
+
     if (!clubFromDB) {
       return res.status(400).json({
         errors: [{ msg: "Klub o takiej nazwie nie istnieje w bazie danych." }],
@@ -73,6 +70,7 @@ router.post("/", [auth], async (req, res) => {
 
     // Create
     profile = new Profile(profileFields);
+
     await profile.save();
     res.json(profile);
   } catch (err) {
