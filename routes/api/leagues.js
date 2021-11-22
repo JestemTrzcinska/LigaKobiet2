@@ -14,7 +14,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() }); // bad request
+      return res.status(400).json({ errors: errors.array() });
     }
 
     const { name } = req.body;
@@ -70,7 +70,7 @@ router.get("/:leagueID", async (req, res) => {
   try {
     const league = await League.findOne({ _id: req.params.leagueID });
 
-    if (league.lenght === 0) {
+    if (!league) {
       return res
         .status(404)
         .json({ errors: [{ msg: "Nie ma ani jednej ligi w bazie danych." }] });
@@ -79,6 +79,11 @@ router.get("/:leagueID", async (req, res) => {
     res.json(league);
   } catch (err) {
     console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res.status(400).json({
+        errors: [{ msg: "Ligi o tym ID nie znaleziono w bazie danych" }],
+      });
+    }
     res.status(500).send("Server Error");
   }
 });
