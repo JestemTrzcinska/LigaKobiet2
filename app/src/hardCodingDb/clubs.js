@@ -2,16 +2,13 @@ export const clubs = [
   {
     name: 'LFA Szczecin',
     logo: 'https://lfa-szczecin.pl/wp-content/uploads/2019/02/ladies-football-academy-logo.png',
+    league: {
+      name: 'Ekstraliga',
+    },
+    season: {
+      name: '2020/2021',
+    },
     history: [
-      {
-        league: {
-          name: 'Ekstraliga',
-        },
-        isCurrent: true,
-        season: {
-          date: '2020/2021',
-        },
-      },
       {
         league: {
           name: 'Ekstraliga',
