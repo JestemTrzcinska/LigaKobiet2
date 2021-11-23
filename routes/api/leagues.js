@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+import { check, validationResult } from "express-validator";
 
-const { check, validationResult } = require("express-validator");
+import League from "../../models/League.js";
 
-const League = require("../../models/League");
+const router = Router();
 
 // @route     POST api/leagues
 // @desc      Add league
@@ -89,4 +89,4 @@ router.get("/:leagueID", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

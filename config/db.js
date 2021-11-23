@@ -1,15 +1,17 @@
-const mongoose = require("mongoose");
-const config = require("config");
-const db = config.get("mongoURI");
+import mongoose from "mongoose";
 
-const connectDB = async () => {
+const info = JSON.parse(
+  await readFile(new URL("./default.json", import.meta.url))
+);
+
+import { readFile } from "fs/promises";
+
+export const connectDB = async () => {
   try {
-    await mongoose.connect(db);
+    await mongoose.connect(info.mongoURI);
     console.log("MongoDB Connected...");
   } catch (error) {
-    console.error(err.message);
+    console.error(error.message);
     process.exit(1);
   }
 };
-
-module.exports = connectDB;

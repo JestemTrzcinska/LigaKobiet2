@@ -1,8 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const { check, validationResult } = require("express-validator");
+import { Router } from "express";
+import { check, validationResult } from "express-validator";
 
-const Player = require("../../models/Player");
+import Player from "../../models/Player.js";
+
+const router = Router();
 
 // @route     POST api/players
 // @desc      Add player
@@ -61,8 +62,6 @@ router.post(
 
       await player.save();
       res.json(player);
-
-      // res.send('Player added');
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error.");
@@ -106,4 +105,4 @@ router.get("/:playerID", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

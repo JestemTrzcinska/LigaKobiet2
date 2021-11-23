@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const LeagueSchema = new mongoose.Schema({
   name: {
@@ -7,4 +7,4 @@ const LeagueSchema = new mongoose.Schema({
   },
 });
 
-module.exports = League = mongoose.model("league", LeagueSchema);
+export default mongoose.model("league", LeagueSchema);

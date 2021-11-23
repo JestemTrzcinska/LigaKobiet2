@@ -1,10 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const { check, validationResult } = require("express-validator");
+import { Router } from "express";
+import { check, validationResult } from "express-validator";
 
-const Club = require("../../models/Club");
-const League = require("../../models/League");
-const Season = require("../../models/Season");
+import Club from "../../models/Club.js";
+import League from "../../models/League.js";
+import Season from "../../models/Season.js";
+
+const router = Router();
 
 // @route     POST api/clubs
 // @desc      Add club
@@ -168,4 +169,4 @@ router.get("/:clubID", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

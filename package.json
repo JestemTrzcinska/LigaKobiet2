@@ -1,6 +1,7 @@
 {
   "name": "ligakobiet2",
   "version": "1.0.0",
+  "type": "module",
   "description": "Developers setup",
   "main": "server.js",
   "scripts": {

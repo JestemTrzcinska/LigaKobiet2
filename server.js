@@ -1,25 +1,36 @@
-const express = require("express");
-const connectDb = require("./config/db");
-require("dotenv").config();
+import express from "express";
+import { connectDB } from "./config/db.js";
+
+import auth from "./routes/api/auth.js";
+import clubs from "./routes/api/clubs.js";
+import games from "./routes/api/games.js";
+import leagues from "./routes/api/leagues.js";
+import players from "./routes/api/players.js";
+import profile from "./routes/api/profile.js";
+import seasons from "./routes/api/seasons.js";
+import users from "./routes/api/users.js";
+
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
 // Connect Database
-connectDb();
+connectDB();
 
 app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => res.send("API RUnning"));
 
 // Define routes
-app.use("/api/auth", require("./routes/api/auth"));
-app.use("/api/clubs", require("./routes/api/clubs"));
-app.use("/api/games", require("./routes/api/games"));
-app.use("/api/leagues", require("./routes/api/leagues"));
-app.use("/api/players", require("./routes/api/players"));
-app.use("/api/profile", require("./routes/api/profile"));
-app.use("/api/seasons", require("./routes/api/seasons"));
-app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", auth);
+app.use("/api/clubs", clubs);
+app.use("/api/games", games);
+app.use("/api/leagues", leagues);
+app.use("/api/players", players);
+app.use("/api/profile", profile);
+app.use("/api/seasons", seasons);
+app.use("/api/users", users);
 
 const PORT = process.env.PORT || 5000;
 

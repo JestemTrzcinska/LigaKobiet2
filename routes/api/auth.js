@@ -1,12 +1,13 @@
-const express = require("express");
-const router = express.Router();
-const auth = require("../../middleware/auth");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("config");
-const { check, validationResult } = require("express-validator");
+import { Router } from "express";
+import auth from "../../middleware/auth.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { check, validationResult } from "express-validator";
+import { readFile } from "fs/promises";
 
-const User = require("../../models/User");
+import User from "../../models/User.js";
+
+const router = Router();
 
 // @route     GET api/auth
 // @desc      Test route
@@ -61,15 +62,14 @@ router.post(
         },
       };
 
-      jwt.sign(
-        payload,
-        config.get("jwtSecret"),
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
+      const info = JSON.parse(
+        await readFile(new URL("../../config/default.json", import.meta.url))
       );
+
+      jwt.sign(payload, info.jwtSecret, { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error.");
@@ -77,4 +77,4 @@ router.post(
   }
 );
 
-module.exports = router;
+export default router;

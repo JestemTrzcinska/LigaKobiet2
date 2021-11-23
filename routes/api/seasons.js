@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+import { check, validationResult } from "express-validator";
 
-const { check, validationResult } = require("express-validator");
+import Season from "../../models/Season.js";
 
-const Season = require("../../models/Season");
+const router = Router();
 
 // @route     POST api/seasons
 // @desc      Add season
@@ -115,4 +115,4 @@ router.get("/:seasonID", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

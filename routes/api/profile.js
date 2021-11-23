@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const auth = require("../../middleware/auth");
-const { validationResult } = require("express-validator");
+import { Router } from "express";
+import auth from "../../middleware/auth.js";
 
-const Profile = require("../../models/Profile");
+import Profile from "../../models/Profile.js";
+
+const router = Router();
 
 // @route     GET api/profile/me
 // @desc      Get current users profile
@@ -133,4 +133,4 @@ router.get("/user/:userID", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
