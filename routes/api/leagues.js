@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { check, validationResult } from "express-validator";
 
+import { serverErrors, validate } from "../../const/exceptions.js";
+
 import League from "../../models/League.js";
 
 const router = Router();
@@ -10,7 +12,7 @@ const router = Router();
 // @access    Public
 router.post(
   "/",
-  [check("name", "Nazwa jest wymagana.").not().isEmpty()],
+  [check("name", validate.leagueName).not().isEmpty()],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -24,7 +26,7 @@ router.post(
       const leagueFromDB = await League.findOne({ name });
       if (leagueFromDB) {
         return res.status(400).json({
-          errors: [{ msg: "Taka liga już istnieje w bazie danych." }],
+          errors: [{ msg: serverErrors.leagueAlreadyExists }],
         });
       }
 
@@ -35,7 +37,7 @@ router.post(
       res.json(league);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error.");
+      res.status(500).send(serverErrors.serverError);
     }
   }
 );
@@ -51,7 +53,7 @@ router.get("/", async (req, res) => {
       return res.status(404).json({
         errors: [
           {
-            msg: "Nie ma ani jednej ligi w bazie danych.",
+            msg: serverErrors.leaguesNotFound,
           },
         ],
       });
@@ -60,7 +62,7 @@ router.get("/", async (req, res) => {
     res.json(league);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
@@ -74,7 +76,7 @@ router.get("/:leagueID", async (req, res) => {
     if (!league) {
       return res
         .status(404)
-        .json({ errors: [{ msg: "Nie ma ani jednej ligi w bazie danych." }] });
+        .json({ errors: [{ msg: serverErrors.leagueNotFound }] });
     }
 
     res.json(league);
@@ -82,10 +84,10 @@ router.get("/:leagueID", async (req, res) => {
     console.error(err.message);
     if (err.kind == "ObjectId") {
       return res.status(400).json({
-        errors: [{ msg: "Ligi o tym ID nie znaleziono w bazie danych" }],
+        errors: [{ msg: serverErrors.leagueNotFound }],
       });
     }
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 

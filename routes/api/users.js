@@ -4,9 +4,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { readFile } from "fs/promises";
 
+import { validate, serverErrors } from "../../const/exceptions.js";
+
 import User from "../../models/User.js";
 
 const router = Router();
+
+const defaultURL = "../../config/default.json";
 
 // @route     POST api/users
 // @desc      Register user
@@ -14,13 +18,10 @@ const router = Router();
 router.post(
   "/",
   [
-    check("firstName", "Proszę o podanie swojego imienia").not().isEmpty(),
-    check("lastName", "Proszę o podanie swojego nazwiska.").not().isEmpty(),
-    check("email", "Proszę o podanie prawidłowego maila.").isEmail(),
-    check(
-      "password",
-      "Słabe hasło! Wprowadź kombinację przynajmniej sześciu liter i cyfr." // i znaków interpunktycjnych.'
-    ).isLength({ min: 6 }),
+    check("firstName", validate.userFirstName).not().isEmpty(),
+    check("lastName", validate.userLastName).not().isEmpty(),
+    check("email", validate.email).isEmail(),
+    check("password", validate.insecurePassword).isLength({ min: 6 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -35,7 +36,7 @@ router.post(
       let user = await User.findOne({ email });
       if (user) {
         return res.status(400).json({
-          errors: [{ msg: "Użytkownik o podanym emailu już istnieje." }],
+          errors: [{ msg: serverErrors.userAlreadyExists }],
         });
       }
 
@@ -58,7 +59,7 @@ router.post(
       };
 
       const info = JSON.parse(
-        await readFile(new URL("../../config/default.json", import.meta.url))
+        await readFile(new URL(defaultURL, import.meta.url))
       );
 
       jwt.sign(payload, info.jwtSecret, { expiresIn: 360000 }, (err, token) => {
@@ -69,7 +70,7 @@ router.post(
       await user.save();
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error.");
+      res.status(500).send(serverErrors.serverError);
     }
   }
 );

@@ -5,9 +5,13 @@ import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
 import { readFile } from "fs/promises";
 
+import { serverErrors, validate } from "../../const/exceptions.js";
+
 import User from "../../models/User.js";
 
 const router = Router();
+
+const defaultURL = "../../config/default.json";
 
 // @route     GET api/auth
 // @desc      Test route
@@ -18,7 +22,7 @@ router.get("/", auth, async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
@@ -28,8 +32,8 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    check("email", "Proszę podaj prawidłowego maila.").isEmail(),
-    check("password", "Proszę podaj prawidłowe hasło.").exists(),
+    check("email", validate.email).isEmail(),
+    check("password", validate.password).exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -44,14 +48,14 @@ router.post(
       let user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({
-          errors: [{ msg: "Podano błędne dane logowania." }],
+          errors: [{ msg: serverErrors.incorrectLogin }],
         });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(400).json({
-          errors: [{ msg: "Podano błędne dane logowania." }],
+          errors: [{ msg: serverErrors.incorrectLogin }],
         });
       }
 
@@ -63,7 +67,7 @@ router.post(
       };
 
       const info = JSON.parse(
-        await readFile(new URL("../../config/default.json", import.meta.url))
+        await readFile(new URL(defaultURL, import.meta.url))
       );
 
       jwt.sign(payload, info.jwtSecret, { expiresIn: 360000 }, (err, token) => {
@@ -72,7 +76,7 @@ router.post(
       });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error.");
+      res.status(500).send(serverErrors.serverError);
     }
   }
 );

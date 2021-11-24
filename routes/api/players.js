@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { check, validationResult } from "express-validator";
 
+import { serverErrors, validate } from "../../const/exceptions.js";
+
 import Player from "../../models/Player.js";
 import League from "../../models/League.js";
 import Season from "../../models/Season.js";
@@ -14,32 +16,12 @@ const router = Router();
 router.post(
   "/",
   [
-    check("firstName", "Imię zawodniczki jest wymagane.").not().isEmpty(),
-    check("lastName", "Nazwisko zawodniczki jest wymagane.").not().isEmpty(),
-    check(
-      "club",
-      "Podanie paru informacji o aktualnym klubie zawodniczki jest wymagane."
-    )
-      .not()
-      .isEmpty(),
-    check(
-      "club.league",
-      "Podanie informacji o aktualnej lidze zawodniczki jest wymagane."
-    )
-      .not()
-      .isEmpty(),
-    check(
-      "club.season",
-      "Podanie informacji o aktualnym sezonie zawodniczki jest wymagane."
-    )
-      .not()
-      .isEmpty(),
-    check(
-      "club.club",
-      "Podanie informacji o aktualnym klubie zawodniczki jest wymagane."
-    )
-      .not()
-      .isEmpty(),
+    check("firstName", validate.playerFirstName).not().isEmpty(),
+    check("lastName", validate.playerLastName).not().isEmpty(),
+    check("club", validate.playerClubInformations).not().isEmpty(),
+    check("club.league", validate.playerLeague).not().isEmpty(),
+    check("club.season", validate.playerSeason).not().isEmpty(),
+    check("club.club", validate.playerClub).not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -67,28 +49,26 @@ router.post(
       name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     }
 
-    // return res.status(500).json({errors: [{msg: ''}]})
-
     try {
       const leagueFromDB = await League.findOne({ name: league });
       if (!leagueFromDB) {
         return res
-          .status(500)
-          .json({ errors: [{ msg: "Taka liga nie istnieje." }] });
+          .status(404)
+          .json({ errors: [{ msg: serverErrors.leagueNotFound }] });
       }
 
       const seasonFromDB = await Season.findOne({ name: season });
       if (!seasonFromDB) {
         return res
-          .status(500)
-          .json({ errors: [{ msg: "Taki sezon nie istnieje." }] });
+          .status(404)
+          .json({ errors: [{ msg: serverErrors.seasonNotFound }] });
       }
 
       const clubFromDB = await Club.findOne({ name: club });
       if (!clubFromDB) {
         return res
-          .status(500)
-          .json({ errors: [{ msg: "Taki klub nie istnieje." }] });
+          .status(404)
+          .json({ errors: [{ msg: serverErrors.clubNotFound }] });
       }
 
       const seasonsAndClubs = [];
@@ -101,22 +81,22 @@ router.post(
             const leagueFromDB = await League.findOne({ name: item.league });
             if (!leagueFromDB) {
               return res
-                .status(500)
-                .json({ errors: [{ msg: "Taka liga nie istnieje." }] });
+                .status(404)
+                .json({ errors: [{ msg: serverErrors.leagueNotFound }] });
             }
 
             const seasonFromDB = await Season.findOne({ name: item.season });
             if (!seasonFromDB) {
               return res
-                .status(500)
-                .json({ errors: [{ msg: "Taki sezon nie istnieje." }] });
+                .status(404)
+                .json({ errors: [{ msg: serverErrors.seasonNotFound }] });
             }
 
             const clubFromDB = await Club.findOne({ name: item.club });
             if (!clubFromDB) {
               return res
-                .status(500)
-                .json({ errors: [{ msg: "Taki klub nie istnieje." }] });
+                .status(404)
+                .json({ errors: [{ msg: serverErrors.clubNotFound }] });
             }
 
             if (
@@ -129,7 +109,7 @@ router.post(
               return res.status(400).json({
                 errors: [
                   {
-                    msg: "Jedna zawodniczka nie mógła grać dwa razy w tym samym sezonie w tej samej lidze.",
+                    msg: serverErrors.invalidSeasonClubInPlayer,
                   },
                 ],
               });
@@ -157,9 +137,7 @@ router.post(
       if (player) {
         // Update
         player = await Player.findOneAndUpdate(
-          {
-            _id: player._id,
-          },
+          { _id: player._id },
           {
             $set: {
               firstName,
@@ -195,7 +173,7 @@ router.post(
       res.json(player);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error.");
+      res.status(500).send(serverErrors.serverError);
     }
   }
 );
@@ -211,13 +189,13 @@ router.get("/", async (req, res) => {
       .populate("history.club");
     if (player.length === 0) {
       return res.status(404).json({
-        errors: [{ msg: "Nie ma ani jednej zawodniczki w bazie danych." }],
+        errors: [{ msg: serverErrors.playersNotFound }],
       });
     }
     res.json(player);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
@@ -233,9 +211,7 @@ router.get("/:playerID", async (req, res) => {
 
     if (!player) {
       return res.status(404).json({
-        errors: [
-          { msg: "Zawodniczki o takim id nie znaleziono w bazie danych" },
-        ],
+        errors: [{ msg: serverErrors.playerNotFound }],
       });
     }
 
@@ -243,13 +219,11 @@ router.get("/:playerID", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     if (err.kind == "ObjectId") {
-      return res.status(400).json({
-        errors: [
-          { msg: "Zawodniczki o takim id nie znaleziono w bazie danych" },
-        ],
+      return res.status(404).json({
+        errors: [{ msg: serverErrors.playerNotFound }],
       });
     }
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 

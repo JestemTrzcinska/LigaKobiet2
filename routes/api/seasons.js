@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { check, validationResult } from "express-validator";
 
+import { serverErrors, validate } from "../../const/exceptions.js";
+
 import Season from "../../models/Season.js";
 
 const router = Router();
@@ -11,9 +13,9 @@ const router = Router();
 router.post(
   "/",
   [
-    check("name", "Nazwa jest wymagana.").not().isEmpty(),
-    check("from", "Podanie daty 'od' jest wymagane.").not().isEmpty(),
-    check("to", "Podanie daty 'do' jest wymagane.").not().isEmpty(),
+    check("name", validate.seasonName).not().isEmpty(),
+    check("from", validate.seasonFrom).not().isEmpty(),
+    check("to", validate.seasonTo).not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -25,7 +27,7 @@ router.post(
 
     if (new Date(from) >= new Date(to)) {
       return res.status(400).json({
-        errors: [{ msg: "Data 'od' musi być przed datą 'po'." }],
+        errors: [{ msg: serverErrors.invalidDateSeason }],
       });
     }
 
@@ -34,7 +36,7 @@ router.post(
       let seasonFromDB = await Season.findOne({ name, from, to });
       if (seasonFromDB) {
         return res.status(400).json({
-          errors: [{ msg: "Taki sezon już istnieje." }],
+          errors: [{ msg: serverErrors.seasonAlreadyExists }],
         });
       }
 
@@ -61,7 +63,7 @@ router.post(
       res.json(season);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error.");
+      res.status(500).send(serverErrors.serverError);
     }
   }
 );
@@ -75,18 +77,14 @@ router.get("/", async (req, res) => {
 
     if (season.length === 0) {
       return res.status(404).json({
-        errors: [
-          {
-            msg: "Nie ma ani jednego sezonu w bazie danych.",
-          },
-        ],
+        errors: [{ msg: serverErrors.seasonsNotFound }],
       });
     }
 
     res.json(season);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
@@ -99,7 +97,7 @@ router.get("/:seasonID", async (req, res) => {
 
     if (!season) {
       return res.status(404).json({
-        errors: [{ msg: "Nie ma ani jednego sezonu w bazie danych." }],
+        errors: [{ msg: serverErrors.seasonNotFound }],
       });
     }
 
@@ -108,10 +106,10 @@ router.get("/:seasonID", async (req, res) => {
     console.error(err.message);
     if (err.kind == "ObjectId") {
       return res
-        .status(400)
-        .json({ errors: [{ msg: "Sezonu nie znaleziono w bazie danych" }] });
+        .status(404)
+        .json({ errors: [{ msg: serverErrors.seasonNotFound }] });
     }
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 

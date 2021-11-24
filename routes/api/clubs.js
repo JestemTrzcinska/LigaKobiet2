@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { check, validationResult } from "express-validator";
 
+import { validate, serverErrors } from "../../const/exceptions.js";
+
 import Club from "../../models/Club.js";
 import League from "../../models/League.js";
 import Season from "../../models/Season.js";
@@ -13,10 +15,10 @@ const router = Router();
 router.post(
   "/",
   [
-    check("name", "Nazwa klubu jest wymagana.").not().isEmpty(),
-    check("league", "Podanie aktualnej ligi jest wymagane.").not().isEmpty(),
-    check("season", "Podanie aktualnego sezonu jest wymagane.").not().isEmpty(),
-    check("logo", "Logo musi być linkiem do zdjęcia.").isURL(),
+    check("name", validate.clubName).not().isEmpty(),
+    check("league", validate.leagueNameCurrent).not().isEmpty(),
+    check("season", validate.seasonNameCurrent).not().isEmpty(),
+    check("logo", validate.logo).isURL(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -31,8 +33,8 @@ router.post(
         name: league,
       });
       if (!leagueFromDB) {
-        return res.status(400).json({
-          errors: [{ msg: "Taka liga nie istnieje w bazie danych." }],
+        return res.status(404).json({
+          errors: [{ msg: serverErrors.leagueNotFound }],
         });
       }
 
@@ -40,8 +42,8 @@ router.post(
         name: season,
       });
       if (!seasonFromDB) {
-        return res.status(400).json({
-          errors: [{ msg: "Taki sezon nie istnieje w bazie danych." }],
+        return res.status(404).json({
+          errors: [{ msg: serverErrors.seasonNotFound }],
         });
       }
 
@@ -55,25 +57,21 @@ router.post(
           history.map(async (item) => {
             let leagueDB = await League.findOne({ name: item.league });
             if (!leagueDB) {
-              return res.status(400).json({
-                errors: [{ msg: "Taka liga nie istnieje w bazie danych." }],
+              return res.status(404).json({
+                errors: [{ msg: serverErrors.leagueNotFound }],
               });
             }
 
             let seasonDB = await Season.findOne({ name: item.season });
             if (!seasonDB) {
-              return res.status(400).json({
-                errors: [{ msg: "Taki sezon nie istnieje w bazie danych." }],
+              return res.status(404).json({
+                errors: [{ msg: serverErrors.seasonNotFound }],
               });
             }
 
             if (seasons.some((item) => item.id === seasonDB.id)) {
               return res.status(400).json({
-                errors: [
-                  {
-                    msg: "Jeden klub nie mógł grać dwa razy w tym samym sezonie.",
-                  },
-                ],
+                errors: [{ msg: serverErrors.invalidSeason }],
               });
             }
 
@@ -120,7 +118,7 @@ router.post(
       res.json(club);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error.");
+      res.status(500).send(serverErrors.serverError);
     }
   }
 );
@@ -138,14 +136,14 @@ router.get("/", async (req, res) => {
 
     if (club.length === 0) {
       return res.status(404).json({
-        errors: [{ msg: "Nie ma ani jednego klubu w bazie danych." }],
+        errors: [{ msg: serverErrors.clubsNotFound }],
       });
     }
 
     res.json(club);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
@@ -163,7 +161,7 @@ router.get("/:clubID", async (req, res) => {
 
     if (!club) {
       return res.status(404).json({
-        errors: [{ msg: "Nie ma ani jednego klubu w bazie danych." }],
+        errors: [{ msg: serverErrors.clubNotFound }],
       });
     }
 
@@ -172,10 +170,10 @@ router.get("/:clubID", async (req, res) => {
     console.error(err.message);
     if (err.kind == "ObjectId") {
       return res
-        .status(400)
-        .json({ errors: [{ msg: "Klubu nie znaleziono w bazie danych" }] });
+        .status(404)
+        .json({ errors: [{ msg: serverErrors.clubNotFound }] });
     }
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 

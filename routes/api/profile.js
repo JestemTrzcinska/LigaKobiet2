@@ -1,6 +1,8 @@
 import { Router } from "express";
 import auth from "../../middleware/auth.js";
 
+import { serverErrors } from "../../const/exceptions.js";
+
 import Profile from "../../models/Profile.js";
 
 const router = Router();
@@ -18,14 +20,14 @@ router.get("/me", auth, async (req, res) => {
 
     if (!profile) {
       return res
-        .status(400)
-        .json({ errors: [{ msg: "Ten użytkownik nie ma profilu" }] });
+        .status(404)
+        .json({ errors: [{ msg: serverErrors.profileNotFound }] });
     }
 
     res.json(profile);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
@@ -46,12 +48,9 @@ router.post("/", [auth], async (req, res) => {
       const clubFromDB = await Club.findOne({
         name: favClub,
       });
-
       if (!clubFromDB) {
-        return res.status(400).json({
-          errors: [
-            { msg: "Klub o takiej nazwie nie istnieje w bazie danych." },
-          ],
+        return res.status(404).json({
+          errors: [{ msg: serverErrors.clubNotFound }],
         });
       }
       profileFields.favClub = clubFromDB.id;
@@ -77,14 +76,13 @@ router.post("/", [auth], async (req, res) => {
     res.json(profile);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error.");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
 // @route     Get api/profile
 // @desc      Get all profiles
 // @access    Public
-
 router.get("/", async (req, res) => {
   try {
     const profiles = await Profile.find()
@@ -94,20 +92,19 @@ router.get("/", async (req, res) => {
     if (profiles.length === 0) {
       return res
         .status(404)
-        .json({ errors: [{ msg: "W bazie danych nie ma profili" }] });
+        .json({ errors: [{ msg: serverErrors.playersNotFound }] });
     }
 
     res.json(profiles);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
 // @route     Get api/profile/user/:user_id
 // @desc      Get profile by user ID
 // @access    Public
-
 router.get("/user/:userID", async (req, res) => {
   try {
     const profile = await Profile.findOne({
@@ -118,18 +115,18 @@ router.get("/user/:userID", async (req, res) => {
 
     if (!profile)
       return res
-        .status(400)
-        .json({ errors: [{ msg: "Profil nie znaleziony w bazie danych" }] });
+        .status(404)
+        .json({ errors: [{ msg: serverErrors.profileNotFound }] });
 
     res.json(profile);
   } catch (err) {
     console.error(err.message);
     if (err.kind == "ObjectId") {
       return res
-        .status(400)
-        .json({ errors: [{ msg: "Profilu nie znaleziono w bazie danych" }] });
+        .status(404)
+        .json({ errors: [{ msg: serverErrors.profileNotFound }] });
     }
-    res.status(500).send("Server Error");
+    res.status(500).send(serverErrors.serverError);
   }
 });
 
