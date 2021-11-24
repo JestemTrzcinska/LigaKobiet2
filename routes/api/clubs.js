@@ -133,7 +133,6 @@ router.get("/", async (req, res) => {
     const club = await Club.find()
       .populate("league")
       .populate("season")
-      .populate("history")
       .populate("history.league")
       .populate("history.season");
 
