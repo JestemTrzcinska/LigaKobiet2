@@ -47,39 +47,42 @@ router.post(
 
       const seasons = [];
       seasons.push(seasonFromDB);
+      let historyData;
 
       // check info in history
-      const historyData = await Promise.all(
-        history.map(async (item) => {
-          let leagueDB = await League.findOne({ name: item.league });
-          if (!leagueDB) {
-            return res.status(400).json({
-              errors: [{ msg: "Taka liga nie istnieje w bazie danych." }],
-            });
-          }
+      if (history?.length > 0) {
+        historyData = await Promise.all(
+          history.map(async (item) => {
+            let leagueDB = await League.findOne({ name: item.league });
+            if (!leagueDB) {
+              return res.status(400).json({
+                errors: [{ msg: "Taka liga nie istnieje w bazie danych." }],
+              });
+            }
 
-          let seasonDB = await Season.findOne({ name: item.season });
-          if (!seasonDB) {
-            return res.status(400).json({
-              errors: [{ msg: "Taki sezon nie istnieje w bazie danych." }],
-            });
-          }
+            let seasonDB = await Season.findOne({ name: item.season });
+            if (!seasonDB) {
+              return res.status(400).json({
+                errors: [{ msg: "Taki sezon nie istnieje w bazie danych." }],
+              });
+            }
 
-          if (seasons.some((item) => item.id === seasonDB.id)) {
-            return res.status(400).json({
-              errors: [
-                {
-                  msg: "Jeden klub nie mógł grać dwa razy w tym samym sezonie.",
-                },
-              ],
-            });
-          }
+            if (seasons.some((item) => item.id === seasonDB.id)) {
+              return res.status(400).json({
+                errors: [
+                  {
+                    msg: "Jeden klub nie mógł grać dwa razy w tym samym sezonie.",
+                  },
+                ],
+              });
+            }
 
-          seasons.push(seasonDB);
+            seasons.push(seasonDB);
 
-          return { league: leagueDB, season: seasonDB };
-        })
-      );
+            return { league: leagueDB, season: seasonDB };
+          })
+        );
+      }
 
       let club = await Club.findOne({
         name,
@@ -101,7 +104,7 @@ router.post(
           { new: true }
         );
 
-        // return res.json(clubUpdate);
+        return res.json(clubUpdate);
       }
 
       // Create
@@ -113,7 +116,7 @@ router.post(
         history: historyData,
       });
 
-      // await club.save();
+      await club.save();
       res.json(club);
     } catch (err) {
       console.error(err.message);
@@ -127,7 +130,12 @@ router.post(
 // @access    Public
 router.get("/", async (req, res) => {
   try {
-    const club = await Club.find().populate("league");
+    const club = await Club.find()
+      .populate("league")
+      .populate("season")
+      .populate("history")
+      .populate("history.league")
+      .populate("history.season");
 
     if (club.length === 0) {
       return res.status(404).json({
@@ -147,9 +155,12 @@ router.get("/", async (req, res) => {
 // @access    Public
 router.get("/:clubID", async (req, res) => {
   try {
-    const club = await Club.findOne({ _id: req.params.clubID }).populate(
-      "league"
-    );
+    const club = await Club.findOne({ _id: req.params.clubID })
+      .populate("league")
+      .populate("season")
+      .populate("history")
+      .populate("history.league")
+      .populate("history.season");
 
     if (!club) {
       return res.status(404).json({
