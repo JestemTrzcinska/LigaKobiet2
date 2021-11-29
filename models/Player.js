@@ -18,26 +18,7 @@ const PlayerSchema = new mongoose.Schema({
   birth: {
     type: Date,
   },
-  club: {
-    type: Object,
-    required: true,
-    league: {
-      type: mongoose.Types.ObjectId,
-      ref: "league",
-      required: true,
-    },
-    season: {
-      type: mongoose.Types.ObjectId,
-      ref: "season",
-      required: true,
-    },
-    club: {
-      type: mongoose.Types.ObjectId,
-      ref: "club",
-      required: true,
-    },
-  },
-  history: [
+  clubs: [
     {
       league: {
         type: mongoose.Types.ObjectId,
@@ -54,7 +35,8 @@ const PlayerSchema = new mongoose.Schema({
         ref: "club",
         required: true,
       },
-      required: false,
+      type: Object,
+      required: true,
     },
   ],
 });

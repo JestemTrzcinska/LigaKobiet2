@@ -18,10 +18,10 @@ router.post(
   [
     check("firstName", validate.playerFirstName).not().isEmpty(),
     check("lastName", validate.playerLastName).not().isEmpty(),
-    check("club", validate.playerClubInformations).not().isEmpty(),
-    check("club.league", validate.playerLeague).not().isEmpty(),
-    check("club.season", validate.playerSeason).not().isEmpty(),
-    check("club.club", validate.playerClub).not().isEmpty(),
+    check("clubs", validate.playerClubInformations).not().isEmpty(),
+    check("clubs.*.league", validate.playerLeague).not().isEmpty(),
+    check("clubs.*.season", validate.playerSeason).not().isEmpty(),
+    check("clubs.*.club", validate.playerClub).not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -29,15 +29,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    let {
-      firstName,
-      lastName,
-      name,
-      picture,
-      birth,
-      club: { league, season, club },
-      history,
-    } = req.body;
+    let { firstName, lastName, name, picture, birth, clubs } = req.body;
 
     // String in the right way - first letter is upper case, others are lower case
     firstName =
@@ -50,34 +42,12 @@ router.post(
     }
 
     try {
-      const leagueFromDB = await League.findOne({ name: league });
-      if (!leagueFromDB) {
-        return res
-          .status(404)
-          .json({ errors: [{ msg: serverErrors.leagueNotFound }] });
-      }
-
-      const seasonFromDB = await Season.findOne({ name: season });
-      if (!seasonFromDB) {
-        return res
-          .status(404)
-          .json({ errors: [{ msg: serverErrors.seasonNotFound }] });
-      }
-
-      const clubFromDB = await Club.findOne({ name: club });
-      if (!clubFromDB) {
-        return res
-          .status(404)
-          .json({ errors: [{ msg: serverErrors.clubNotFound }] });
-      }
-
       const seasonsAndClubs = [];
-      seasonsAndClubs.push({ season: seasonFromDB, club: clubFromDB });
-      let historyData;
+      let clubsData;
 
-      if (history?.length > 0) {
-        historyData = await Promise.all(
-          history.map(async (item) => {
+      if (clubs?.length > 0) {
+        clubsData = await Promise.all(
+          clubs.map(async (item) => {
             const leagueFromDB = await League.findOne({ name: item.league });
             if (!leagueFromDB) {
               return res
@@ -125,9 +95,7 @@ router.post(
       let player = await Player.findOne({
         firstName,
         lastName,
-        club: {
-          club: clubFromDB,
-        },
+        name,
       });
 
       if (player) {
@@ -141,12 +109,7 @@ router.post(
               name,
               picture,
               birth,
-              club: {
-                league: leagueFromDB,
-                season: seasonFromDB,
-                club: clubFromDB,
-              },
-              history: historyData,
+              clubs: clubsData,
             },
           },
           { new: true }
@@ -161,8 +124,7 @@ router.post(
         name,
         picture,
         birth,
-        club: { league: leagueFromDB, season: seasonFromDB, club: clubFromDB },
-        history: historyData,
+        clubs: clubsData,
       });
 
       await player.save();
@@ -180,9 +142,9 @@ router.post(
 router.get("/", async (req, res) => {
   try {
     const player = await Player.find()
-      .populate("history.league")
-      .populate("history.season")
-      .populate("history.club");
+      .populate("clubs.league")
+      .populate("clubs.season")
+      .populate("clubs.club");
     if (player.length === 0) {
       return res.status(404).json({
         errors: [{ msg: serverErrors.playersNotFound }],
@@ -201,9 +163,9 @@ router.get("/", async (req, res) => {
 router.get("/:playerID", async (req, res) => {
   try {
     const player = await Player.findOne({ _id: req.params.playerID })
-      .populate("history.league")
-      .populate("history.season")
-      .populate("history.club");
+      .populate("clubs.league")
+      .populate("clubs.season")
+      .populate("clubs.club");
 
     if (!player) {
       return res.status(404).json({

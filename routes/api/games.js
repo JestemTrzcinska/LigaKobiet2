@@ -226,4 +226,63 @@ router.get("/:gameID", async (req, res) => {
   }
 });
 
+// @route     GET api/games/:gameID/players
+// @desc      Get players in the game by game ID
+// @access    Public
+router.get("/:gameID/players", async (req, res) => {
+  try {
+    const game = await Game.findOne({
+      _id: req.params.gameID,
+    })
+      .populate("home")
+      .populate("away")
+      .populate("league")
+      .populate("season")
+      .populate("goals.shotBy");
+    if (!game) {
+      return res.status(404).json({
+        errors: [{ msg: serverErrors.gameNotFound }],
+      });
+    }
+
+    const { home, away, league, season } = game;
+
+    const playersAway = await Player.aggregate([
+      {
+        $unwind: "$clubs",
+      },
+      {
+        $match: {
+          "clubs.league": league,
+          "clubs.season": season,
+          "clubs.club": away,
+        },
+      },
+    ]);
+
+    const playersHome = await Player.aggregate([
+      {
+        $unwind: "$clubs",
+      },
+      {
+        $match: {
+          "clubs.league": league,
+          "clubs.season": season,
+          "clubs.club": home,
+        },
+      },
+    ]);
+
+    res.json({ playersHome, playersAway });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res.status(404).json({
+        errors: [{ msg: serverErrors.gameNotFound }],
+      });
+    }
+    res.status(500).send(serverErrors.serverError);
+  }
+});
+
 export default router;

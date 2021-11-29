@@ -53,11 +53,9 @@ export const validate = {
   playerLastName: "Nazwisko zawodniczki jest wymagane.",
   playerClubInformations:
     "Podanie kilku informacji o aktualnym klubie zawodniczki jest wymagane.",
-  playerLeague:
-    "Podanie informacji o aktualnej lidze zawodniczki jest wymagane.",
-  playerSeason:
-    "Podanie informacji o aktualnym sezonie zawodniczki jest wymagane.",
-  playerClub: "Podanie nazwy aktualnego klubu zawodniczki jest wymagane.",
+  playerLeague: "Podanie informacji o lidze zawodniczki jest wymagane.", //"Podanie informacji o aktualnej lidze zawodniczki jest wymagane."
+  playerSeason: "Podanie informacji o sezonie zawodniczki jest wymagane.", //"Podanie informacji o aktualnym sezonie zawodniczki jest wymagane.",
+  playerClub: "Podanie nazwy klubu zawodniczki jest wymagane.", //"Podanie nazwy aktualnego klubu zawodniczki jest wymagane."
 
   gameHome: "Podanie nazwy drużyny gospodarzy jest wymagane.",
   gameAway: "Podanie nazwy drużyny gości jest wymagane.",
