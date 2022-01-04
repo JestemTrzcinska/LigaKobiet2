@@ -68,3 +68,34 @@ export const getClubById = async (id) => {
     console.log(error.message);
   }
 };
+
+//
+// @desc  Add game
+export const addGame = async (formData) => {
+  try {
+    const res = await axios.post(`http://localhost:3000/api/games`, formData, config);
+    console.log(res.data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Get all games
+export const getGames = async () => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/games`);
+    console.log(res.data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Get game by ID
+export const getGameById = async (id) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/games/${id}`);
+    console.log(res.data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
