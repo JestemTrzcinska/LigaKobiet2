@@ -10,6 +10,7 @@ import { optionsLong } from '../consts/options';
 import { single } from '../consts/strings';
 
 import { games } from '../hardCodingDb/games';
+import { getPlayers } from '../actions';
 
 const showDayGame = (date) => {
   return Object.values(
@@ -133,6 +134,8 @@ applyDotsByMonth(new Date());
 
 export const Schedule = ({ navigation, route }) => {
   const [daySelected, setDaySelected] = useState(new Date());
+
+  getPlayers();
 
   return (
     <Containter>
