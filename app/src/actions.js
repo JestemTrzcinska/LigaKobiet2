@@ -7,13 +7,14 @@ const config = {
   },
 };
 
+//
 // @desc  Get all players
 export const getPlayers = async () => {
   try {
     const res = await axios.get(`http://localhost:3000/api/players`);
     console.log(res.data);
   } catch (error) {
-    console.log(err.message);
+    console.log(error.message);
   }
 };
 
@@ -23,7 +24,7 @@ export const addPlayer = async (formData) => {
     const res = await axios.post(`http://localhost:3000/api/players`, formData, config);
     console.log(res.data);
   } catch (error) {
-    console.log(err.message);
+    console.log(error.message);
   }
 };
 
@@ -33,6 +34,37 @@ export const getPlayerById = async (id) => {
     const res = await axios.get(`http://localhost:3000/api/players/${id}`);
     console.log(res.data);
   } catch (error) {
-    console.log(err.message);
+    console.log(error.message);
+  }
+};
+
+//
+// @desc  Add club
+export const addClub = async (formData) => {
+  try {
+    const res = await axios.post(`http://localhost:3000/api/clubs`, formData, config);
+    console.log(res.data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Get all clubs
+export const getClubs = async () => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/clubs`);
+    console.log(res.data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Get club by ID
+export const getClubById = async (id) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/clubs/${id}`);
+    console.log(res.data);
+  } catch (error) {
+    console.log(error.message);
   }
 };
