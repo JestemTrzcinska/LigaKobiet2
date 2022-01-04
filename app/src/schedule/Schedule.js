@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import Containter from '../Container';
 import { Calendar } from 'react-native-calendars';
@@ -9,10 +9,9 @@ import { styles } from './schedule.style';
 import { optionsLong } from '../consts/options';
 import { single } from '../consts/strings';
 
-import { games } from '../hardCodingDb/games';
-import { getPlayers } from '../actions';
+import { getGames } from '../actions';
 
-const showDayGame = (date) => {
+const showDayGame = (games, date) => {
   return Object.values(
     games
       // only the ones that are today
@@ -25,19 +24,20 @@ const showDayGame = (date) => {
       })
       // sort by league
       .reduce((acc, item) => {
-        if (!acc[item.league])
-          acc[item.league] = {
-            league: item.league,
+        if (!acc[item.league.name])
+          acc[item.league.name] = {
+            league: item.league.name,
             items: [],
           };
-        acc[item.league].items.push(item);
+        acc[item.league.name].items.push(item);
         return acc;
       }, {}),
   );
 };
 
 const getMonthFormat = (monthNumber) => {
-  return monthNumber.toString().length === 1 ? `0${monthNumber + 1}` : monthNumber + 1;
+  const number = monthNumber + 1;
+  return number.toString().length === 1 ? `0${monthNumber + 1}` : monthNumber + 1;
 };
 
 const ekstraliga = { key: 'Ekstraliga', color: 'chartreuse' };
@@ -56,8 +56,7 @@ const returnRightFormatDate = (date) => {
 };
 
 // set dots in calendar - 3 month at a time
-const applyDotsByMonth = (lastDayOfMonth) => {
-  var date = new Date(lastDayOfMonth);
+const applyDotsByMonth = (games, date) => {
   var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
   var lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
 
@@ -76,9 +75,9 @@ const applyDotsByMonth = (lastDayOfMonth) => {
         return item[1].key;
       });
       // check if there is not the wanted league
-      if (!allLeaguesInMarkedDate.includes(item.league)) {
+      if (!allLeaguesInMarkedDate.includes(item.league.name)) {
         // if there is not, add league dot to the marked day
-        switch (item.league) {
+        switch (item.league.name) {
           case 'Ekstraliga':
             markedDates[rightFormatDate].dots.push(ekstraliga);
             break;
@@ -99,7 +98,7 @@ const applyDotsByMonth = (lastDayOfMonth) => {
 
     // if in the markedDates is not the date, add it with right league
     else {
-      switch (item.league) {
+      switch (item.league.name) {
         case 'Ekstraliga':
           markedDates[rightFormatDate] = { dots: [ekstraliga] };
           break;
@@ -129,48 +128,55 @@ const calendarTheme = {
   arrowColor: '#1C0C5B',
 };
 
-// use effect
-applyDotsByMonth(new Date());
-
 export const Schedule = ({ navigation, route }) => {
+  const [games, setGames] = useState();
   const [daySelected, setDaySelected] = useState(new Date());
 
-  getPlayers();
+  useEffect(async () => {
+    const gamesFromApi = await getGames();
+    setGames(gamesFromApi);
+  }, [getGames]);
+
+  if (games) applyDotsByMonth(games, new Date());
 
   return (
     <Containter>
-      <Calendar
-        theme={calendarTheme}
-        style={styles.calendar}
-        onDayPress={(day) => {
-          setDaySelected(new Date(day.dateString));
-        }}
-        onLongPress={(day) => {
-          setDaySelected(new Date(day.dateString));
-        }}
-        onMonthChange={(month) => {
-          applyDotsByMonth(new Date(month.dateString));
-        }}
-        firstDay={1}
-        disableAllTouchEventsForDisabledDays={true}
-        enableSwipeMonths={true}
-        markingType={'multi-dot'}
-        markedDates={markedDates}
-      />
+      {games ? (
+        <>
+          <Calendar
+            theme={calendarTheme}
+            style={styles.calendar}
+            onDayPress={(day) => {
+              setDaySelected(new Date(day.dateString));
+            }}
+            onLongPress={(day) => {
+              setDaySelected(new Date(day.dateString));
+            }}
+            onMonthChange={(month) => {
+              applyDotsByMonth(games, new Date(month.dateString));
+            }}
+            firstDay={1}
+            disableAllTouchEventsForDisabledDays={true}
+            enableSwipeMonths={true}
+            markingType={'multi-dot'}
+            markedDates={markedDates}
+          />
 
-      <TextWhite style={styles.info}>{new Date(daySelected).toLocaleDateString('pl', optionsLong)}</TextWhite>
-      {showDayGame(daySelected).length > 0 ? (
-        showDayGame(daySelected).map((item, index) => {
-          return (
-            <View style={styles.top} key={index}>
-              <TextName style={styles.league}>{item.league}</TextName>
-              <GameItem items={item.items} navigation={navigation} />
-            </View>
-          );
-        })
-      ) : (
-        <TextWhite>{single.noGames}</TextWhite>
-      )}
+          <TextWhite style={styles.info}>{daySelected.toLocaleDateString('pl', optionsLong)}</TextWhite>
+          {showDayGame(games, daySelected).length > 0 ? (
+            showDayGame(games, daySelected).map((item, index) => {
+              return (
+                <View style={styles.top} key={index}>
+                  <TextName style={styles.league}>{item.league}</TextName>
+                  <GameItem items={item.items} navigation={navigation} />
+                </View>
+              );
+            })
+          ) : (
+            <TextWhite>{single.noGames}</TextWhite>
+          )}
+        </>
+      ) : null}
     </Containter>
   );
 };

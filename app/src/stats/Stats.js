@@ -106,7 +106,7 @@ export const Stats = ({ navigation, route }) => {
             <Queens league={selectedValue} season={selectedSeason} />
           </>
         ) : (
-          <Text style={styles.text}>{single.noData}</Text>
+          <TextWhite style={styles.text}>{single.noData}</TextWhite>
         )}
       </ScrollView>
     </Containter>

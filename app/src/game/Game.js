@@ -16,7 +16,7 @@ export const Game = ({ route }) => {
         <View style={styles.view}>
           <View style={styles.card}>
             <Image source={{ uri: logoHome }} style={styles.image} />
-            <TextWhite style={styles.name}>{home}</TextWhite>
+            <TextWhite style={styles.name}>{home.name}</TextWhite>
           </View>
 
           <View style={styles.card}>
@@ -34,7 +34,7 @@ export const Game = ({ route }) => {
 
           <View style={styles.card}>
             <Image source={{ uri: logoAway }} style={styles.image} />
-            <TextWhite style={styles.name}>{away}</TextWhite>
+            <TextWhite style={styles.name}>{away.name}</TextWhite>
           </View>
         </View>
 

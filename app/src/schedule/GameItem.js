@@ -14,13 +14,13 @@ export const GameItem = ({ items, navigation }) => {
             style={styles.games}
             key={index}
             onPress={() => {
-              navigation.navigate(game.game, { item, name: item.league });
+              navigation.navigate(game.game, { item, name: item.league.name });
             }}>
-            <TextName style={styles.name}>{item.home}</TextName>
+            <TextName style={styles.name}>{item.home.name}</TextName>
             <TextWhite style={styles.score}>
               {item.isFinished ? item.scoreHome : '-'} : {item.isFinished ? item.scoreAway : '-'}
             </TextWhite>
-            <TextName style={styles.name}>{item.away}</TextName>
+            <TextName style={styles.name}>{item.away.name}</TextName>
             <TextWhite style={styles.date}>{item.date.split(' ')[1]}</TextWhite>
           </TouchableOpacity>
         );
