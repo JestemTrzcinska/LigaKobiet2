@@ -12,7 +12,7 @@ const config = {
 export const getPlayers = async () => {
   try {
     const res = await axios.get(`http://localhost:3000/api/players`);
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -22,7 +22,7 @@ export const getPlayers = async () => {
 export const addPlayer = async (formData) => {
   try {
     const res = await axios.post(`http://localhost:3000/api/players`, formData, config);
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -32,7 +32,7 @@ export const addPlayer = async (formData) => {
 export const getPlayerById = async (id) => {
   try {
     const res = await axios.get(`http://localhost:3000/api/players/${id}`);
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -43,7 +43,7 @@ export const getPlayerById = async (id) => {
 export const addClub = async (formData) => {
   try {
     const res = await axios.post(`http://localhost:3000/api/clubs`, formData, config);
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -53,7 +53,7 @@ export const addClub = async (formData) => {
 export const getClubs = async () => {
   try {
     const res = await axios.get(`http://localhost:3000/api/clubs`);
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -63,7 +63,7 @@ export const getClubs = async () => {
 export const getClubById = async (id) => {
   try {
     const res = await axios.get(`http://localhost:3000/api/clubs/${id}`);
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -74,7 +74,7 @@ export const getClubById = async (id) => {
 export const addGame = async (formData) => {
   try {
     const res = await axios.post(`http://localhost:3000/api/games`, formData, config);
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -94,7 +94,68 @@ export const getGames = async () => {
 export const getGameById = async (id) => {
   try {
     const res = await axios.get(`http://localhost:3000/api/games/${id}`);
-    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+//
+// @desc  Get logged in user's profile
+export const getUsersProfile = async () => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/profile/me`);
+    return res.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Add profile
+export const addProfile = async (formData) => {
+  try {
+    const res = await axios.post(`http://localhost:3000/api/profile`, formData, config);
+    return res.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Get all profiles
+export const getProfiles = async () => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/profile`);
+    return res.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Get profile by ID
+export const getProfileById = async (id) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/profile/user/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Get user by token
+export const getUserByToken = async () => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/auth`);
+    return res.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// @desc  Authenticate user & get token
+export const loginUser = async (formData) => {
+  try {
+    const res = await axios.post(`http://localhost:3000/api/auth`, formData, config);
+    return res.data;
   } catch (error) {
     console.log(error.message);
   }

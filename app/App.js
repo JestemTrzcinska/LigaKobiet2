@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -16,6 +16,7 @@ import { EditProfile } from './src/profile/EditProfile';
 import { game, menu, single } from './src/consts/strings';
 import { NewsItem } from './src/news/NewsItem';
 import { Game } from './src/game/Game';
+import { AuthProvider, AuthContext } from './src/AuthContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,23 +40,25 @@ const Theme = {
 
 const App = () => {
   return (
-    <NavigationContainer theme={Theme}>
-      <Stack.Navigator screenOptions={stackOptions}>
-        <Stack.Screen name={menu.title} component={HomeScreen} />
-        <Stack.Screen name={menu.schedule} component={Schedule} />
-        <Stack.Screen name={menu.stats} component={Stats} />
-        <Stack.Screen name={menu.news} component={News} />
+    <AuthProvider>
+      <NavigationContainer theme={Theme}>
+        <Stack.Navigator screenOptions={stackOptions}>
+          <Stack.Screen name={menu.title} component={HomeScreen} />
+          <Stack.Screen name={menu.schedule} component={Schedule} />
+          <Stack.Screen name={menu.stats} component={Stats} />
+          <Stack.Screen name={menu.news} component={News} />
 
-        <Stack.Screen name={menu.login} component={Login} />
-        <Stack.Screen name={menu.register} component={Register} />
+          <Stack.Screen name={menu.profile} component={Profile} />
+          <Stack.Screen name={menu.editProfile} component={EditProfile} />
 
-        <Stack.Screen name={menu.profile} component={Profile} />
-        <Stack.Screen name={menu.editProfile} component={EditProfile} />
+          <Stack.Screen name={menu.login} component={Login} />
+          <Stack.Screen name={menu.register} component={Register} />
 
-        <Stack.Screen name={single.newsItem} component={NewsItem} />
-        <Stack.Screen name={game.game} component={Game} options={({ route }) => ({ title: route.params.name })} />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen name={single.newsItem} component={NewsItem} />
+          <Stack.Screen name={game.game} component={Game} options={({ route }) => ({ title: route.params.name })} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 };
 
