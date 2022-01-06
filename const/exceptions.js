@@ -9,6 +9,9 @@ export const serverErrors = {
     "Dwie takie same drużyny nie mogą grać ze sobą oficjalnego meczu. Proszę o wprowadzenie poprawnych danych.",
   invalidGameDate:
     "Prosze o podanie prawidłowej daty meczu. Musi się zawierać w danym sezonie rozgrywkowym",
+  invalidShotBy:
+    "Zawodniczka ta nie mogła grać w tym meczu (w tym sezonie i w tej lidze).",
+
   serverError: "Serwer error.",
 
   leagueNotFound: "Taka liga nie istnieje w bazie danych.", //"Ligi o tym ID nie znaleziono w bazie danych", "Taka liga nie istnieje."

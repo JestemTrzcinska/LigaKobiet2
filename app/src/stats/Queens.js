@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { TextWhite } from '../consts/Text';
 
 import { styles } from './stats.style';
 
-import { goals } from '../hardCodingDb/goals';
 import { single } from '../consts/strings';
+import { getGames } from '../actions';
 
 export const Queens = ({ league, season }) => {
-  const currentGoals = goals.filter((item) => {
-    return item.league == league && item.season == season;
-  });
+  const [games, setGames] = useState();
+
+  useEffect(async () => {
+    setGames(await getGames());
+  }, [getGames]);
+
+  const currentGoals = games
+    ?.filter((item) => {
+      return item.league.name == league && item.season.name == season;
+    })
+    .map((item) => {
+      return {
+        home: item.home.name,
+        away: item.away.name,
+        goals: item.goals,
+        league: item.league.name,
+        season: item.season.name,
+      };
+    });
 
   const summaryArray = [];
   let i = {};
-  currentGoals.forEach((item) => {
-    if (summaryArray.some((e) => e.name === item.name)) {
-      i.goals += item.goals;
-    } else {
-      i = {};
-      i.name = item.name;
-      i.club = item.club;
-      i.goals = item.goals;
-      summaryArray.push(i);
-    }
+  currentGoals?.forEach((item) => {
+    Array.from(item.goals).forEach((goal) => {
+      if (summaryArray.some((e) => e.firstName === goal.shotBy.firstName && e.lastName === goal.shotBy.lastName)) {
+        i.goals += goal.amount;
+      } else {
+        i = {};
+        i.firstName = goal.shotBy.firstName;
+        i.lastName = goal.shotBy.lastName;
+
+        goal.shotBy.clubs.map((clubItem) => {
+          if (clubItem.league.name === item.league && clubItem.season.name === item.season) {
+            if (clubItem.club.name === item.home) i.club = item.home;
+            else i.club = item.away;
+          }
+        });
+
+        i.goals = goal.amount;
+        summaryArray.push(i);
+      }
+    });
   });
 
   return (
@@ -39,7 +65,7 @@ export const Queens = ({ league, season }) => {
             <View style={styles.table} key={index}>
               <TextWhite style={styles.item}>{index + 1}. </TextWhite>
               <TextWhite style={styles.name} numberOfLines={1}>
-                {item.name}
+                {item.firstName} {item.lastName}
               </TextWhite>
               <TextWhite style={styles.name} numberOfLines={1}>
                 {item.club}
