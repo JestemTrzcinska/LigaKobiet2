@@ -179,3 +179,63 @@ export const registerUser = async (formData) => {
     throw error.response.data.errors;
   }
 };
+
+// @desc  Add league
+export const addLeague = async (formData) => {
+  try {
+    const res = await axios.post(`http://localhost:3000/api/leagues`, formData, config);
+    return res.data;
+  } catch (error) {
+    throw error.response.data.errors;
+  }
+};
+
+// @desc  Get all leagues
+export const getLeagues = async () => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/leagues`);
+    return res.data;
+  } catch (error) {
+    throw error.response.data.errors;
+  }
+};
+
+// @desc  Get league by ID
+export const getLeagueById = async (id) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/leagues/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error.response.data.errors;
+  }
+};
+
+// @desc  Add season
+export const addSeason = async (formData) => {
+  try {
+    const res = await axios.post(`http://localhost:3000/api/seasons`, formData, config);
+    return res.data;
+  } catch (error) {
+    throw error.response.data.errors;
+  }
+};
+
+// @desc  Get all seasons
+export const getSeasons = async () => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/seasons`);
+    return res.data;
+  } catch (error) {
+    throw error.response.data.errors;
+  }
+};
+
+// @desc  Get season by ID
+export const getSeasonById = async (id) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/seasons/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error.response.data.errors;
+  }
+};

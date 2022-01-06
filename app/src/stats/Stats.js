@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Containter from '../Container';
@@ -10,8 +10,7 @@ import { Queens } from './Queens';
 
 import { styles } from './stats.style';
 
-import { leagues, seasons } from '../hardCodingDb/leagues';
-import { games } from '../hardCodingDb/games';
+import { getGames, getLeagues, getSeasons } from '../actions';
 import { single } from '../consts/strings';
 
 export const Stats = ({ navigation, route }) => {
@@ -20,24 +19,34 @@ export const Stats = ({ navigation, route }) => {
   const [selectedLastRound, setSelectedLastRound] = useState(null);
   const [selectedRound, setSelectedRound] = useState(null);
 
-  const rigthLeagueAndSeasonFinishedGames = games.filter((item) => {
-    return item.league == selectedValue && item.season == selectedSeason && item.isFinished == true;
+  const [games, setGames] = useState();
+  const [leagues, setLeagues] = useState();
+  const [seasons, setSeasons] = useState();
+
+  useEffect(async () => {
+    setGames(await getGames());
+    setLeagues(await getLeagues());
+    setSeasons(await getSeasons());
+  }, [getGames, getLeagues, getSeasons]);
+
+  const rigthLeagueAndSeasonFinishedGames = games?.filter((item) => {
+    return item.league.name == selectedValue && item.season.name == selectedSeason && item.isFinished == true;
+  });
+
+  const rigthLeagueAndSeason = games?.filter((item) => {
+    return item.league.name == selectedValue && item.season.name == selectedSeason;
   });
 
   const lastFinishedRound = Math.max.apply(
     Math,
-    rigthLeagueAndSeasonFinishedGames.map(function (o) {
+    rigthLeagueAndSeasonFinishedGames?.map(function (o) {
       return o.round;
     }),
   );
 
-  const rigthLeagueAndSeason = games.filter((item) => {
-    return item.league == selectedValue && item.season == selectedSeason;
-  });
-
   const lastRound = Math.max.apply(
     Math,
-    rigthLeagueAndSeason.map(function (o) {
+    rigthLeagueAndSeason?.map(function (o) {
       return o.round;
     }),
   );
@@ -53,22 +62,15 @@ export const Stats = ({ navigation, route }) => {
           : setSelectedRound(lastFinishedRound - 1)}
 
         <View style={styles.top}>
-          <Picker
-            selectedValue={selectedValue}
-            style={styles.league}
-            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            mode="dropdown">
-            {leagues.map((league, index) => {
+          <Picker selectedValue={selectedValue} style={styles.league} onValueChange={setSelectedValue} mode="dropdown">
+            {leagues?.map((league, index) => {
               return <Picker.Item color="white" label={league.name} value={league.name} key={index} />;
             })}
           </Picker>
 
-          <Picker
-            selectedValue={selectedSeason}
-            style={styles.season}
-            onValueChange={(itemValue, itemIndex) => setSelectedSeason(itemValue)}>
-            {seasons.map((item, index) => {
-              return <Picker.Item color="white" label={item.date} value={item.date} key={index} />;
+          <Picker selectedValue={selectedSeason} style={styles.season} onValueChange={setSelectedSeason}>
+            {seasons?.map((item, index) => {
+              return <Picker.Item color="white" label={item.name} value={item.name} key={index} />;
             })}
           </Picker>
         </View>

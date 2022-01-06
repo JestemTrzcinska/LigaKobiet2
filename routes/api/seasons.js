@@ -73,7 +73,7 @@ router.post(
 // @access    Public
 router.get("/", async (req, res) => {
   try {
-    const season = await Season.find();
+    const season = await Season.find().sort({ name: -1 });
 
     if (season.length === 0) {
       return res.status(404).json({

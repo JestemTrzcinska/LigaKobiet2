@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { game } from '../consts/strings';
 import { TextName, TextWhite } from '../consts/Text';
+import { score } from '../game/Game';
 
 import { styles } from './schedule.style';
 
@@ -18,7 +19,7 @@ export const GameItem = ({ items, navigation }) => {
             }}>
             <TextName style={styles.name}>{item.home.name}</TextName>
             <TextWhite style={styles.score}>
-              {item.isFinished ? item.scoreHome : '-'} : {item.isFinished ? item.scoreAway : '-'}
+              {item.isFinished ? score(item.goals, true) : '-'} : {item.isFinished ? score(item.goals, false) : '-'}
             </TextWhite>
             <TextName style={styles.name}>{item.away.name}</TextName>
             <TextWhite style={styles.date}>{item.date.split(' ')[1]}</TextWhite>
