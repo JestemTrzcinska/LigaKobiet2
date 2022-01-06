@@ -105,7 +105,7 @@ export const Stats = ({ navigation, route }) => {
               />
             </View>
             <Round navigation={navigation} league={selectedValue} season={selectedSeason} round={selectedRound} />
-            <Queens league={selectedValue} season={selectedSeason} />
+            <Queens rigthLeagueAndSeason={rigthLeagueAndSeason} />
           </>
         ) : (
           <TextWhite style={styles.text}>{single.noData}</TextWhite>

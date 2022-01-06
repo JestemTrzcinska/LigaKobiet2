@@ -7,26 +7,22 @@ import { styles } from './stats.style';
 import { single } from '../consts/strings';
 import { getGames } from '../actions';
 
-export const Queens = ({ league, season }) => {
+export const Queens = ({ rigthLeagueAndSeason }) => {
   const [games, setGames] = useState();
 
   useEffect(async () => {
     setGames(await getGames());
   }, [getGames]);
 
-  const currentGoals = games
-    ?.filter((item) => {
-      return item.league.name == league && item.season.name == season;
-    })
-    .map((item) => {
-      return {
-        home: item.home.name,
-        away: item.away.name,
-        goals: item.goals,
-        league: item.league.name,
-        season: item.season.name,
-      };
-    });
+  const currentGoals = rigthLeagueAndSeason.map((item) => {
+    return {
+      home: item.home.name,
+      away: item.away.name,
+      goals: item.goals,
+      league: item.league.name,
+      season: item.season.name,
+    };
+  });
 
   const summaryArray = [];
   let i = {};
