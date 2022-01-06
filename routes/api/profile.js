@@ -4,6 +4,7 @@ import auth from "../../middleware/auth.js";
 import { serverErrors } from "../../const/exceptions.js";
 
 import Profile from "../../models/Profile.js";
+import Club from "../../models/Club.js";
 
 const router = Router();
 

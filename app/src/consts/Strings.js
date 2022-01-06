@@ -7,6 +7,8 @@ export const menu = {
   register: 'Rejestracja',
   profile: 'Moje konto',
   editProfile: 'Edytuj dane',
+  createProfile: 'Stwórz profil',
+  logout: 'Wyloguj',
 };
 
 export const placeholder = {
@@ -21,7 +23,7 @@ export const buttons = {
   submit: 'Potwierdź',
   create: 'Zarejestruj się!',
   login: 'Zaloguj się!',
-  edit: 'Edytuj dane',
+  edit: 'Edytuj profil',
   dontHaveAnAccount: 'Nie posiadasz jeszcze konta?',
   alreadyHaveAnAccount: 'Masz już konto?',
 };
@@ -30,6 +32,8 @@ export const profile = {
   favTeam: 'Ulubiony klub: ',
   city: 'Miejscowość: ',
   about: 'O mnie: ',
+  noProfile: 'Nie posiadasz jeszcze profilu, uzupełnij go!',
+  createProfil: 'Stwórz swój profil',
 };
 
 export const single = {

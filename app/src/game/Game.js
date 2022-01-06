@@ -7,16 +7,32 @@ import { game } from '../consts/strings';
 
 import { styles } from './game.style';
 
+const score = (goals, isHome) => {
+  return goals
+    .filter((item) => {
+      return item.goalForTeamHome === isHome;
+    })
+    .map((item) => {
+      return item.amount;
+    })
+    .reduce((acc, item) => {
+      return acc + item.score;
+    });
+};
+
 export const Game = ({ route }) => {
-  const { home, logoHome, away, logoAway, scoreAway, scoreHome, date, round, league, season, isFinished } =
-    route.params.item;
+  const { home, away, date, round, league, season, isFinished, goals } = route.params.item;
+
+  const scoreHome = score(goals, true);
+  const scoreAway = score(goals, false);
+
   return (
     <Container>
       <ScrollView>
         <View style={styles.view}>
           <View style={styles.card}>
-            <Image source={{ uri: logoHome }} style={styles.image} />
-            <TextWhite style={styles.name}>{home}</TextWhite>
+            <Image source={{ uri: home.logo }} style={styles.image} />
+            <TextWhite style={styles.name}>{home.name}</TextWhite>
           </View>
 
           <View style={styles.card}>
@@ -33,8 +49,8 @@ export const Game = ({ route }) => {
           </View>
 
           <View style={styles.card}>
-            <Image source={{ uri: logoAway }} style={styles.image} />
-            <TextWhite style={styles.name}>{away}</TextWhite>
+            <Image source={{ uri: away.logo }} style={styles.image} />
+            <TextWhite style={styles.name}>{away.name}</TextWhite>
           </View>
         </View>
 

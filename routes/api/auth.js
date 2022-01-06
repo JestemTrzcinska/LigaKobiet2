@@ -14,7 +14,7 @@ const router = Router();
 const defaultURL = "../../config/default.json";
 
 // @route     GET api/auth
-// @desc      Test route
+// @desc      Get user by token
 // @access    Public
 router.get("/", auth, async (req, res) => {
   try {

@@ -1,33 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import Containter from '../Container';
+import { AuthContext } from '../AuthContext';
 
 import { TextButton } from '../consts/Buttons';
 import { TextInputWhite, TextWhite } from '../consts/Text';
 import { buttons, profile, menu } from '../consts/strings';
+import { addProfile, getClubs } from '../actions';
 
 import { styles } from './Profile.style';
-import { addProfile, getClubs, getUsersProfile } from '../actions';
-import { AuthContext } from '../AuthContext';
-import { Picker } from '@react-native-picker/picker';
 
-export const EditProfile = ({ navigation, route }) => {
+export const CreateProfile = ({ navigation, route }) => {
   // Profile
   const { auth } = useContext(AuthContext);
 
   const [favTeam, setFavTeam] = useState();
   const [city, setCity] = useState();
   const [about, setAbout] = useState();
-
-  useEffect(async () => {
-    const profileFromDB = await getUsersProfile(auth.token);
-
-    if (profileFromDB) {
-      setFavTeam(profileFromDB.favClub.name);
-      setCity(profileFromDB.city);
-      setAbout(profileFromDB.about);
-    }
-  }, [getUsersProfile]);
 
   // Clubs
   const [clubs, setclubs] = useState();

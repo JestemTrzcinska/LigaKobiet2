@@ -26,6 +26,7 @@ export const TextInputWhite = ({ style, onChangeText, value, placeholder, multil
       placeholder={placeholder}
       placeholderTextColor="white"
       multiline={multiline}
+      autoCapitalize="none"
     />
   );
 };

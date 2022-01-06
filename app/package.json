@@ -5,11 +5,12 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "react-native run-ios",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.14",
     "@react-native-picker/picker": "^2.2.0",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/native-stack": "^6.2.2",
@@ -34,5 +35,6 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "proxy": "http://localhost:3000"
 }
