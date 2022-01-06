@@ -7,6 +7,16 @@ const config = {
   },
 };
 
+const configWithToken = (token) => {
+  const y = {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-auth-token': token,
+    },
+  };
+  return y;
+};
+
 //
 // @desc  Get all players
 export const getPlayers = async () => {
@@ -102,9 +112,9 @@ export const getGameById = async (id) => {
 
 //
 // @desc  Get logged in user's profile
-export const getUsersProfile = async () => {
+export const getUsersProfile = async (token) => {
   try {
-    const res = await axios.get(`http://localhost:3000/api/profile/me`);
+    const res = await axios.get(`http://localhost:3000/api/profile/me`, { headers: { 'x-auth-token': token } });
     return res.data;
   } catch (error) {
     console.log(error.message);
@@ -112,9 +122,9 @@ export const getUsersProfile = async () => {
 };
 
 // @desc  Add profile
-export const addProfile = async (formData) => {
+export const addProfile = async (formData, token) => {
   try {
-    const res = await axios.post(`http://localhost:3000/api/profile`, formData, config);
+    const res = await axios.post(`http://localhost:3000/api/profile`, formData, configWithToken(token));
     return res.data;
   } catch (error) {
     console.log(error.message);

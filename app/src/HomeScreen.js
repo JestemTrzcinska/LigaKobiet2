@@ -1,15 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Containter from './Container';
+import { AuthContext } from './AuthContext';
+
 import { TextButtonNav } from './consts/Buttons';
 import { menu } from './consts/strings';
-import { AuthContext } from './AuthContext';
 
 export const HomeScreen = ({ navigation }) => {
   const [isLogged, setIsLogged] = useState(true);
   const { auth } = useContext(AuthContext);
-
-  console.log(auth);
 
   return (
     <Containter>

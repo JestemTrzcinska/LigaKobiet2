@@ -133,8 +133,7 @@ export const Schedule = ({ navigation, route }) => {
   const [daySelected, setDaySelected] = useState(new Date());
 
   useEffect(async () => {
-    const gamesFromApi = await getGames();
-    setGames(gamesFromApi);
+    setGames(await getGames());
   }, [getGames]);
 
   if (games) applyDotsByMonth(games, new Date());

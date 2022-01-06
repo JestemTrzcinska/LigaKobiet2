@@ -1,13 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+
 import { loginUser } from './actions';
 
 // Create a context
 const AuthContext = createContext();
 
 const configureAxiosHeaders = (token) => {
-  axios.defaults.headers['X-Auth-Token'] = token;
+  axios.defaults.headers['x-auth-token'] = token;
 };
 
 const AuthProvider = ({ children }) => {

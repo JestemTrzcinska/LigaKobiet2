@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
-import { Alert, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View } from 'react-native';
 import Containter from '../Container';
 
 import { TextButton } from '../consts/Buttons';
 import { TextInputWhite, TextWhite } from '../consts/Text';
-import { buttons, profile } from '../consts/strings';
-
-import { profileDB } from '../hardCodingDb/profile';
+import { buttons, profile, menu } from '../consts/strings';
 
 import { styles } from './Profile.style';
+import { addProfile, getUsersProfile } from '../actions';
+import { AuthContext } from '../AuthContext';
 
 export const EditProfile = ({ navigation, route }) => {
-  const [favTeam, setFavTeam] = useState(profileDB.favTeam); // profile.favTeam
-  const [city, setCity] = useState(profileDB.city);
-  const [about, setAbout] = useState(profileDB.about);
+  const { auth } = useContext(AuthContext);
+  const [state, setstate] = useState();
+  const [favTeam, setFavTeam] = useState(state?.favClub);
+  const [city, setCity] = useState();
+  const [about, setAbout] = useState();
+
+  useEffect(async () => {
+    const profileFromDB = await getUsersProfile(auth.token);
+    setstate(profileFromDB);
+    if (profileFromDB) {
+      setFavTeam(profileFromDB.favClub);
+      setCity(profileFromDB.city);
+      setAbout(profileFromDB.about);
+    }
+  }, [getUsersProfile]);
 
   return (
     <Containter>
@@ -46,8 +58,9 @@ export const EditProfile = ({ navigation, route }) => {
       <View style={styles.bottom}>
         <TextButton
           style={styles}
-          onPress={() => {
-            Alert.alert('submited');
+          onPress={async () => {
+            await addProfile({ favTeam, city, about }, auth.token);
+            navigation.goBack(menu.profile);
           }}
           text={buttons.submit}
         />
