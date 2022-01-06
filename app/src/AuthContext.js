@@ -2,8 +2,6 @@ import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-import { loginUser } from './actions';
-
 // Create a context
 const AuthContext = createContext();
 
@@ -13,15 +11,6 @@ const configureAxiosHeaders = (token) => {
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuthState] = useState(undefined);
-
-  // Login user from api
-  useEffect(async () => {
-    const userFromApi = await loginUser({
-      email: 'test@gmail.com',
-      password: 'testuser',
-    });
-    setAuthState(userFromApi);
-  }, [loginUser]);
 
   // Get current auth state from AsyncStorage
   const getAuthState = async () => {

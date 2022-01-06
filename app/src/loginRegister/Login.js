@@ -1,16 +1,37 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, View } from 'react-native';
+
 import Containter from '../Container';
+import { AuthContext } from '../AuthContext';
+
 import { TextButton } from '../consts/Buttons';
 import { TextInputWhite, TextWhite } from '../consts/Text';
-import { styles } from './loginRegister.style';
 import { placeholder, buttons, menu } from '../consts/strings';
+
+import { styles } from './loginRegister.style';
+import { loginUser } from '../actions';
 
 export const Login = ({ navigation }) => {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
 
-  // let dataToSend = { email, password };
+  const { setAuth } = useContext(AuthContext);
+
+  onSubmit = async () => {
+    try {
+      const user = await loginUser({
+        email,
+        password,
+      });
+
+      await setAuth(user);
+      navigation.navigate(menu.title);
+    } catch (error) {
+      error.map((i) => {
+        Alert.alert(i.msg);
+      });
+    }
+  };
 
   return (
     <Containter>
@@ -24,17 +45,10 @@ export const Login = ({ navigation }) => {
         <TextInputWhite
           style={styles.input}
           onChangeText={onChangePassword}
-          // onChangeText={(text) => onChangePassword(text)}
           value={password}
           placeholder={placeholder.password}
         />
-        <TextButton
-          style={styles}
-          onPress={() => {
-            Alert.alert('Simple Button pressed');
-          }}
-          text={buttons.submit}
-        />
+        <TextButton style={styles} onPress={onSubmit} text={buttons.submit} />
       </View>
       <View style={styles.bottom}>
         <TextWhite style={styles.bottomText}>{buttons.dontHaveAnAccount}</TextWhite>

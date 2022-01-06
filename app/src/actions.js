@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from 'axios';
 
 const config = {
@@ -24,7 +23,7 @@ export const getPlayers = async () => {
     const res = await axios.get(`http://localhost:3000/api/players`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -34,7 +33,7 @@ export const addPlayer = async (formData) => {
     const res = await axios.post(`http://localhost:3000/api/players`, formData, config);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -44,7 +43,7 @@ export const getPlayerById = async (id) => {
     const res = await axios.get(`http://localhost:3000/api/players/${id}`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -55,7 +54,7 @@ export const addClub = async (formData) => {
     const res = await axios.post(`http://localhost:3000/api/clubs`, formData, config);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -65,7 +64,7 @@ export const getClubs = async () => {
     const res = await axios.get(`http://localhost:3000/api/clubs`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -75,7 +74,7 @@ export const getClubById = async (id) => {
     const res = await axios.get(`http://localhost:3000/api/clubs/${id}`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -86,7 +85,7 @@ export const addGame = async (formData) => {
     const res = await axios.post(`http://localhost:3000/api/games`, formData, config);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -96,7 +95,7 @@ export const getGames = async () => {
     const res = await axios.get(`http://localhost:3000/api/games`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -106,7 +105,7 @@ export const getGameById = async (id) => {
     const res = await axios.get(`http://localhost:3000/api/games/${id}`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -117,7 +116,7 @@ export const getUsersProfile = async (token) => {
     const res = await axios.get(`http://localhost:3000/api/profile/me`, { headers: { 'x-auth-token': token } });
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -127,7 +126,7 @@ export const addProfile = async (formData, token) => {
     const res = await axios.post(`http://localhost:3000/api/profile`, formData, configWithToken(token));
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -137,7 +136,7 @@ export const getProfiles = async () => {
     const res = await axios.get(`http://localhost:3000/api/profile`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -147,7 +146,7 @@ export const getProfileById = async (id) => {
     const res = await axios.get(`http://localhost:3000/api/profile/user/${id}`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -157,7 +156,7 @@ export const getUserByToken = async () => {
     const res = await axios.get(`http://localhost:3000/api/auth`);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
   }
 };
 
@@ -167,6 +166,16 @@ export const loginUser = async (formData) => {
     const res = await axios.post(`http://localhost:3000/api/auth`, formData, config);
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    throw error.response.data.errors;
+  }
+};
+
+// @desc  Register user
+export const registerUser = async (formData) => {
+  try {
+    const res = await axios.post(`http://localhost:3000/api/users`, formData, config);
+    return res.data;
+  } catch (error) {
+    throw error.response.data.errors;
   }
 };

@@ -44,7 +44,22 @@ export const Profile = ({ navigation }) => {
             />
           </View>
         </>
-      ) : null}
+      ) : (
+        <>
+          <View style={styles.top}>
+            <TextWhite style={styles.title}>{profile.noProfile}</TextWhite>
+          </View>
+          <View style={styles.bottom}>
+            <TextButton
+              style={styles}
+              onPress={() => {
+                navigation.navigate(menu.createProfile);
+              }}
+              text={profile.createProfil}
+            />
+          </View>
+        </>
+      )}
     </Containter>
   );
 };
