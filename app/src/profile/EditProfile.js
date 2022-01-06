@@ -7,19 +7,23 @@ import { TextInputWhite, TextWhite } from '../consts/Text';
 import { buttons, profile, menu } from '../consts/strings';
 
 import { styles } from './Profile.style';
-import { addProfile, getUsersProfile } from '../actions';
+import { addProfile, getClubs, getUsersProfile } from '../actions';
 import { AuthContext } from '../AuthContext';
+import { Picker } from '@react-native-picker/picker';
 
 export const EditProfile = ({ navigation, route }) => {
+  // Profile
   const { auth } = useContext(AuthContext);
   const [state, setstate] = useState();
-  const [favTeam, setFavTeam] = useState(state?.favClub);
+
+  const [favTeam, setFavTeam] = useState();
   const [city, setCity] = useState();
   const [about, setAbout] = useState();
 
   useEffect(async () => {
     const profileFromDB = await getUsersProfile(auth.token);
     setstate(profileFromDB);
+
     if (profileFromDB) {
       setFavTeam(profileFromDB.favClub);
       setCity(profileFromDB.city);
@@ -27,17 +31,29 @@ export const EditProfile = ({ navigation, route }) => {
     }
   }, [getUsersProfile]);
 
+  // Clubs
+  const [clubs, setclubs] = useState();
+
+  useEffect(async () => {
+    setclubs(await getClubs());
+  }, [getClubs]);
+
   return (
     <Containter>
       <View style={styles.top}>
         <TextWhite style={[styles.title, styles.titleEdit]}>{profile.favTeam}</TextWhite>
-        <TextInputWhite
+        <Picker
+          selectedValue={favTeam}
           style={styles.input}
-          onChangeText={setFavTeam}
-          value={favTeam}
-          placeholder={profile.favTeam}
-          multiline={true}
-        />
+          onValueChange={(itemValue, itemIndex) => {
+            setFavTeam(itemValue);
+          }}
+          mode="dropdown">
+          {clubs?.map((club, index) => {
+            return <Picker.Item color="white" label={club.name} value={club.name} key={index} />;
+          })}
+        </Picker>
+
         <TextWhite style={[styles.title, styles.titleEdit]}>{profile.city}</TextWhite>
         <TextInputWhite
           style={styles.input}
@@ -46,6 +62,7 @@ export const EditProfile = ({ navigation, route }) => {
           placeholder={profile.city}
           multiline={true}
         />
+
         <TextWhite style={[styles.title, styles.titleEdit]}>{profile.about}</TextWhite>
         <TextInputWhite
           style={styles.input}
@@ -59,7 +76,7 @@ export const EditProfile = ({ navigation, route }) => {
         <TextButton
           style={styles}
           onPress={async () => {
-            await addProfile({ favTeam, city, about }, auth.token);
+            await addProfile({ favClub: favTeam, city, about }, auth.token);
             navigation.goBack(menu.profile);
           }}
           text={buttons.submit}
