@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { TextName, TextWhite } from '../consts/Text';
 
 import { styles } from './stats.style';
 
 import { game, single } from '../consts/strings';
-import { getGames } from '../actions';
 import { optionsDate } from '../consts/options';
 import { score } from '../game/Game';
 
-export const Round = ({ navigation, league, season, round, last = false }) => {
-  const [games, setGames] = useState();
-
-  useEffect(async () => {
-    setGames(await getGames());
-  }, [getGames]);
-
-  const currentGames = games
+export const Round = ({ navigation, rigthLeagueAndSeason, round, last = false }) => {
+  const currentGames = rigthLeagueAndSeason
     ?.filter((item) => {
-      return item.league.name == league && item.season.name == season && item.round == round;
+      return item.round == round;
     })
     .sort(function (a, b) {
       return new Date(b.date) - new Date(a.date);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Containter from '../Container';
 import { TextButton } from '../consts/Buttons';
@@ -11,7 +11,6 @@ import { Queens } from './Queens';
 import { styles } from './stats.style';
 
 import { getGames, getLeagues, getSeasons } from '../actions';
-import { single } from '../consts/strings';
 
 export const Stats = ({ navigation, route }) => {
   const [selectedValue, setSelectedValue] = useState('Ekstraliga');
@@ -79,8 +78,7 @@ export const Stats = ({ navigation, route }) => {
           <Table rigthLeagueAndSeason={rigthLeagueAndSeason} />
           <Round
             navigation={navigation}
-            league={selectedValue}
-            season={selectedSeason}
+            rigthLeagueAndSeason={rigthLeagueAndSeason}
             round={lastFinishedRound ? lastFinishedRound : 1}
             last={true}
           />
@@ -103,7 +101,7 @@ export const Stats = ({ navigation, route }) => {
               style={styles}
             />
           </View>
-          <Round navigation={navigation} league={selectedValue} season={selectedSeason} round={selectedRound} />
+          <Round navigation={navigation} rigthLeagueAndSeason={rigthLeagueAndSeason} round={selectedRound} />
           <Queens rigthLeagueAndSeason={rigthLeagueAndSeason} />
         </>
       </ScrollView>
