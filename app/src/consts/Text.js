@@ -17,7 +17,7 @@ export const TextWhite = ({ children, style, numberOfLines = null }) => {
   );
 };
 
-export const TextInputWhite = ({ style, onChangeText, value, placeholder, multiline = false }) => {
+export const TextInputWhite = ({ style, onChangeText, value, placeholder, multiline = false, secure = false }) => {
   return (
     <TextInput
       style={[style, { color: 'white', borderColor: 'white' }]}
@@ -27,6 +27,7 @@ export const TextInputWhite = ({ style, onChangeText, value, placeholder, multil
       placeholderTextColor="white"
       multiline={multiline}
       autoCapitalize="none"
+      secureTextEntry={secure}
     />
   );
 };

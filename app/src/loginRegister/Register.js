@@ -63,12 +63,14 @@ export const Register = ({ navigation }) => {
           onChangeText={onChangePassword}
           value={password}
           placeholder={placeholder.password}
+          secure={true}
         />
         <TextInputWhite
           style={styles.input}
           onChangeText={onChangePassword2}
           value={password2}
           placeholder={placeholder.password2}
+          secure={true}
         />
         <TextButton style={styles} onPress={onSubmit} text={buttons.submit} />
       </View>
