@@ -23,7 +23,7 @@ export const EditProfile = ({ navigation, route }) => {
     const profileFromDB = await getUsersProfile(auth.token);
 
     if (profileFromDB) {
-      setFavTeam(profileFromDB.favClub.name);
+      setFavTeam(profileFromDB.favClub?.name);
       setCity(profileFromDB.city);
       setAbout(profileFromDB.about);
     }

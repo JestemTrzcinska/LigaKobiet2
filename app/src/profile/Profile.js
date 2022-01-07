@@ -28,7 +28,7 @@ export const Profile = ({ navigation }) => {
         <>
           <View style={styles.top}>
             <TextWhite style={styles.title}>{profile.favTeam}</TextWhite>
-            <TextWhite style={styles.text}>{state.favClub.name}</TextWhite>
+            <TextWhite style={styles.text}>{state.favClub?.name}</TextWhite>
             <TextWhite style={styles.title}>{profile.city}</TextWhite>
             <TextWhite style={styles.text}>{state.city}</TextWhite>
             <TextWhite style={styles.title}>{profile.about}</TextWhite>

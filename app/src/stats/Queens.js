@@ -14,7 +14,7 @@ export const Queens = ({ rigthLeagueAndSeason }) => {
     setGames(await getGames());
   }, [getGames]);
 
-  const currentGoals = rigthLeagueAndSeason.map((item) => {
+  const currentGoals = rigthLeagueAndSeason?.map((item) => {
     return {
       home: item.home.name,
       away: item.away.name,

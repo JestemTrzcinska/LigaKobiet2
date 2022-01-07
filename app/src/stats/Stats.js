@@ -60,7 +60,6 @@ export const Stats = ({ navigation, route }) => {
           : lastFinishedRound == 1
           ? setSelectedRound(lastFinishedRound)
           : setSelectedRound(lastFinishedRound - 1)}
-
         <View style={styles.top}>
           <Picker selectedValue={selectedValue} style={styles.league} onValueChange={setSelectedValue} mode="dropdown">
             {leagues?.map((league, index) => {
@@ -74,42 +73,39 @@ export const Stats = ({ navigation, route }) => {
             })}
           </Picker>
         </View>
+        {/* {lastFinishedRound > -1 ? ( */}
+        <>
+          {/* {console.log(lastFinishedRound)} */}
+          <Table rigthLeagueAndSeason={rigthLeagueAndSeason} />
+          <Round
+            navigation={navigation}
+            league={selectedValue}
+            season={selectedSeason}
+            round={lastFinishedRound ? lastFinishedRound : 1}
+            last={true}
+          />
 
-        {lastFinishedRound > -1 ? (
-          <>
-            <Table league={selectedValue} season={selectedSeason} />
-            <Round
-              navigation={navigation}
-              league={selectedValue}
-              season={selectedSeason}
-              round={lastFinishedRound}
-              last={true}
+          <View style={styles.buttonsRound}>
+            <TextWhite style={styles.text}>{selectedRound}. kolejka</TextWhite>
+            <TextButton
+              text="<"
+              onPress={() => {
+                if (selectedRound > 1) setSelectedRound(selectedRound - 1);
+              }}
+              style={styles}
             />
 
-            <View style={styles.buttonsRound}>
-              <TextWhite style={styles.text}>{selectedRound}. kolejka</TextWhite>
-              <TextButton
-                text="<"
-                onPress={() => {
-                  if (selectedRound > 1) setSelectedRound(selectedRound - 1);
-                }}
-                style={styles}
-              />
-
-              <TextButton
-                text=">"
-                onPress={() => {
-                  if (selectedRound < lastRound) setSelectedRound(selectedRound + 1);
-                }}
-                style={styles}
-              />
-            </View>
-            <Round navigation={navigation} league={selectedValue} season={selectedSeason} round={selectedRound} />
-            <Queens rigthLeagueAndSeason={rigthLeagueAndSeason} />
-          </>
-        ) : (
-          <TextWhite style={styles.text}>{single.noData}</TextWhite>
-        )}
+            <TextButton
+              text=">"
+              onPress={() => {
+                if (selectedRound < lastRound) setSelectedRound(selectedRound + 1);
+              }}
+              style={styles}
+            />
+          </View>
+          <Round navigation={navigation} league={selectedValue} season={selectedSeason} round={selectedRound} />
+          <Queens rigthLeagueAndSeason={rigthLeagueAndSeason} />
+        </>
       </ScrollView>
     </Containter>
   );
