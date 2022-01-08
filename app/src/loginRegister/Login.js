@@ -47,6 +47,7 @@ export const Login = ({ navigation }) => {
           onChangeText={onChangePassword}
           value={password}
           placeholder={placeholder.password}
+          secure={true}
         />
         <TextButton style={styles} onPress={onSubmit} text={buttons.submit} />
       </View>

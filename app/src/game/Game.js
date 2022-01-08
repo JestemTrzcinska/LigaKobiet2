@@ -7,17 +7,23 @@ import { game } from '../consts/strings';
 
 import { styles } from './game.style';
 
-const score = (goals, isHome) => {
-  return goals
-    .filter((item) => {
-      return item.goalForTeamHome === isHome;
-    })
-    .map((item) => {
-      return item.amount;
-    })
-    .reduce((acc, item) => {
+export const score = (goals, isHome) => {
+  const g = goals.filter((item) => {
+    return item.goalForTeamHome === isHome;
+  });
+
+  const y = g.map((item) => {
+    return item.amount;
+  });
+
+  if (y.length == 1) return y[0];
+  else if (y.length == 0) return 0;
+  else {
+    const z = y.reduce((acc, item) => {
       return acc + item.score;
-    });
+    }, 0);
+    return z;
+  }
 };
 
 export const Game = ({ route }) => {

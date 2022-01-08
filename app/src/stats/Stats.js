@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Containter from '../Container';
 import { TextButton } from '../consts/Buttons';
@@ -10,81 +10,74 @@ import { Queens } from './Queens';
 
 import { styles } from './stats.style';
 
-import { leagues, seasons } from '../hardCodingDb/leagues';
-import { games } from '../hardCodingDb/games';
-import { single } from '../consts/strings';
+import { getGames, getLeagues, getSeasons } from '../actions';
 
 export const Stats = ({ navigation, route }) => {
   const [selectedValue, setSelectedValue] = useState('Ekstraliga');
   const [selectedSeason, setSelectedSeason] = useState('2020/2021');
-  const [selectedLastRound, setSelectedLastRound] = useState(null);
-  const [selectedRound, setSelectedRound] = useState(null);
 
-  const rigthLeagueAndSeasonFinishedGames = games.filter((item) => {
-    return item.league == selectedValue && item.season == selectedSeason && item.isFinished == true;
+  const [games, setGames] = useState();
+  const [leagues, setLeagues] = useState();
+  const [seasons, setSeasons] = useState();
+
+  useEffect(async () => {
+    setGames(await getGames());
+    setLeagues(await getLeagues());
+    setSeasons(await getSeasons());
+  }, [getGames, getLeagues, getSeasons]);
+
+  const rigthLeagueAndSeasonFinishedGames = games?.filter((item) => {
+    return item.league.name == selectedValue && item.season.name == selectedSeason && item.isFinished == true;
+  });
+
+  const rigthLeagueAndSeason = games?.filter((item) => {
+    return item.league.name == selectedValue && item.season.name == selectedSeason;
   });
 
   const lastFinishedRound = Math.max.apply(
     Math,
-    rigthLeagueAndSeasonFinishedGames.map(function (o) {
+    rigthLeagueAndSeasonFinishedGames?.map(function (o) {
       return o.round;
     }),
   );
-
-  const rigthLeagueAndSeason = games.filter((item) => {
-    return item.league == selectedValue && item.season == selectedSeason;
-  });
 
   const lastRound = Math.max.apply(
     Math,
-    rigthLeagueAndSeason.map(function (o) {
+    rigthLeagueAndSeason?.map(function (o) {
       return o.round;
     }),
   );
+
+  const [selectedRound, setSelectedRound] = useState(lastFinishedRound > -1 ? lastFinishedRound : 1);
 
   return (
     <Containter>
       <ScrollView nestedScrollEnabled scrollEnabled>
-        {selectedLastRound ? null : setSelectedLastRound(lastFinishedRound)}
-        {selectedLastRound
-          ? null
-          : lastFinishedRound == 1
-          ? setSelectedRound(lastFinishedRound)
-          : setSelectedRound(lastFinishedRound - 1)}
-
         <View style={styles.top}>
-          <Picker
-            selectedValue={selectedValue}
-            style={styles.league}
-            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            mode="dropdown">
-            {leagues.map((league, index) => {
+          <Picker selectedValue={selectedValue} style={styles.league} onValueChange={setSelectedValue} mode="dropdown">
+            {leagues?.map((league, index) => {
               return <Picker.Item color="white" label={league.name} value={league.name} key={index} />;
             })}
           </Picker>
 
-          <Picker
-            selectedValue={selectedSeason}
-            style={styles.season}
-            onValueChange={(itemValue, itemIndex) => setSelectedSeason(itemValue)}>
-            {seasons.map((item, index) => {
-              return <Picker.Item color="white" label={item.date} value={item.date} key={index} />;
+          <Picker selectedValue={selectedSeason} style={styles.season} onValueChange={setSelectedSeason}>
+            {seasons?.map((item, index) => {
+              return <Picker.Item color="white" label={item.name} value={item.name} key={index} />;
             })}
           </Picker>
         </View>
 
-        {lastFinishedRound > -1 ? (
-          <>
-            <Table league={selectedValue} season={selectedSeason} />
-            <Round
-              navigation={navigation}
-              league={selectedValue}
-              season={selectedSeason}
-              round={lastFinishedRound}
-              last={true}
-            />
+        <>
+          <Table rigthLeagueAndSeason={rigthLeagueAndSeason} />
+          <Round
+            navigation={navigation}
+            rigthLeagueAndSeason={rigthLeagueAndSeason}
+            round={lastFinishedRound > -1 ? lastFinishedRound : 1}
+            last={true}
+          />
 
-            <View style={styles.buttonsRound}>
+          <View style={styles.buttonsRound}>
+            <>
               <TextWhite style={styles.text}>{selectedRound}. kolejka</TextWhite>
               <TextButton
                 text="<"
@@ -93,7 +86,6 @@ export const Stats = ({ navigation, route }) => {
                 }}
                 style={styles}
               />
-
               <TextButton
                 text=">"
                 onPress={() => {
@@ -101,13 +93,15 @@ export const Stats = ({ navigation, route }) => {
                 }}
                 style={styles}
               />
-            </View>
-            <Round navigation={navigation} league={selectedValue} season={selectedSeason} round={selectedRound} />
-            <Queens league={selectedValue} season={selectedSeason} />
-          </>
-        ) : (
-          <TextWhite style={styles.text}>{single.noData}</TextWhite>
-        )}
+            </>
+          </View>
+          <Round
+            navigation={navigation}
+            rigthLeagueAndSeason={rigthLeagueAndSeason}
+            round={selectedRound ? selectedRound : lastFinishedRound}
+          />
+          <Queens rigthLeagueAndSeason={rigthLeagueAndSeason} />
+        </>
       </ScrollView>
     </Containter>
   );

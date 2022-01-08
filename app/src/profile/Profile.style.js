@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     paddingTop: 10,
+    borderColor: 'white',
   },
   button: {
     padding: 5,

@@ -129,6 +129,7 @@ router.post(
 router.get("/", async (req, res) => {
   try {
     const club = await Club.find()
+      .sort({ name: 1 })
       .populate("league")
       .populate("season")
       .populate("history.league")
