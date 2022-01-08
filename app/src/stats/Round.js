@@ -19,7 +19,7 @@ export const Round = ({ navigation, rigthLeagueAndSeason, round, last = false })
 
   return (
     <View>
-      {last ? <TextWhite style={styles.text}>Ostatnia ({round}.) kolejka</TextWhite> : null}
+      {last && round > 0 ? <TextWhite style={styles.text}>Ostatnia ({round}.) kolejka</TextWhite> : null}
       {currentGames?.length > 0 ? (
         currentGames?.map((item, index) => {
           return (

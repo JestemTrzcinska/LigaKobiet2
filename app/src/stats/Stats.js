@@ -15,8 +15,6 @@ import { getGames, getLeagues, getSeasons } from '../actions';
 export const Stats = ({ navigation, route }) => {
   const [selectedValue, setSelectedValue] = useState('Ekstraliga');
   const [selectedSeason, setSelectedSeason] = useState('2020/2021');
-  const [selectedLastRound, setSelectedLastRound] = useState(null);
-  const [selectedRound, setSelectedRound] = useState(null);
 
   const [games, setGames] = useState();
   const [leagues, setLeagues] = useState();
@@ -50,15 +48,11 @@ export const Stats = ({ navigation, route }) => {
     }),
   );
 
+  const [selectedRound, setSelectedRound] = useState(lastFinishedRound > -1 ? lastFinishedRound : 1);
+
   return (
     <Containter>
       <ScrollView nestedScrollEnabled scrollEnabled>
-        {selectedLastRound ? null : setSelectedLastRound(lastFinishedRound)}
-        {selectedLastRound
-          ? null
-          : lastFinishedRound == 1
-          ? setSelectedRound(lastFinishedRound)
-          : setSelectedRound(lastFinishedRound - 1)}
         <View style={styles.top}>
           <Picker selectedValue={selectedValue} style={styles.league} onValueChange={setSelectedValue} mode="dropdown">
             {leagues?.map((league, index) => {
@@ -72,36 +66,40 @@ export const Stats = ({ navigation, route }) => {
             })}
           </Picker>
         </View>
-        {/* {lastFinishedRound > -1 ? ( */}
+
         <>
-          {/* {console.log(lastFinishedRound)} */}
           <Table rigthLeagueAndSeason={rigthLeagueAndSeason} />
           <Round
             navigation={navigation}
             rigthLeagueAndSeason={rigthLeagueAndSeason}
-            round={lastFinishedRound ? lastFinishedRound : 1}
+            round={lastFinishedRound > -1 ? lastFinishedRound : 1}
             last={true}
           />
 
           <View style={styles.buttonsRound}>
-            <TextWhite style={styles.text}>{selectedRound}. kolejka</TextWhite>
-            <TextButton
-              text="<"
-              onPress={() => {
-                if (selectedRound > 1) setSelectedRound(selectedRound - 1);
-              }}
-              style={styles}
-            />
-
-            <TextButton
-              text=">"
-              onPress={() => {
-                if (selectedRound < lastRound) setSelectedRound(selectedRound + 1);
-              }}
-              style={styles}
-            />
+            <>
+              <TextWhite style={styles.text}>{selectedRound}. kolejka</TextWhite>
+              <TextButton
+                text="<"
+                onPress={() => {
+                  if (selectedRound > 1) setSelectedRound(selectedRound - 1);
+                }}
+                style={styles}
+              />
+              <TextButton
+                text=">"
+                onPress={() => {
+                  if (selectedRound < lastRound) setSelectedRound(selectedRound + 1);
+                }}
+                style={styles}
+              />
+            </>
           </View>
-          <Round navigation={navigation} rigthLeagueAndSeason={rigthLeagueAndSeason} round={selectedRound} />
+          <Round
+            navigation={navigation}
+            rigthLeagueAndSeason={rigthLeagueAndSeason}
+            round={selectedRound ? selectedRound : lastFinishedRound}
+          />
           <Queens rigthLeagueAndSeason={rigthLeagueAndSeason} />
         </>
       </ScrollView>

@@ -51,25 +51,29 @@ export const Queens = ({ rigthLeagueAndSeason }) => {
   return (
     <View style={styles.lastTable}>
       <TextWhite style={styles.text}>{single.queens}</TextWhite>
-      {summaryArray
-        .sort((a, b) => {
-          return b.goals - a.goals;
-        })
-        .slice(0, 5)
-        .map((item, index) => {
-          return (
-            <View style={styles.table} key={index}>
-              <TextWhite style={styles.item}>{index + 1}. </TextWhite>
-              <TextWhite style={styles.name} numberOfLines={1}>
-                {item.firstName} {item.lastName}
-              </TextWhite>
-              <TextWhite style={styles.name} numberOfLines={1}>
-                {item.club}
-              </TextWhite>
-              <TextWhite style={styles.item}>{item.goals}</TextWhite>
-            </View>
-          );
-        })}
+      {summaryArray.length > 0 ? (
+        summaryArray
+          .sort((a, b) => {
+            return b.goals - a.goals;
+          })
+          .slice(0, 5)
+          .map((item, index) => {
+            return (
+              <View style={styles.table} key={index}>
+                <TextWhite style={styles.item}>{index + 1}. </TextWhite>
+                <TextWhite style={styles.name} numberOfLines={1}>
+                  {item.firstName} {item.lastName}
+                </TextWhite>
+                <TextWhite style={styles.name} numberOfLines={1}>
+                  {item.club}
+                </TextWhite>
+                <TextWhite style={styles.item}>{item.goals}</TextWhite>
+              </View>
+            );
+          })
+      ) : (
+        <TextWhite>{single.noData}</TextWhite>
+      )}
     </View>
   );
 };
