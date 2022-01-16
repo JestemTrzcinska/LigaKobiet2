@@ -26,11 +26,27 @@ export const score = (goals, isHome) => {
   }
 };
 
+const goalForWho = (goals) => {
+  const home = [];
+  const away = [];
+
+  goals.map((goal) => {
+    if (goal.goalForTeamHome) home.push(goal);
+    else away.push(goal);
+  });
+  return [home, away];
+};
+
 export const Game = ({ route }) => {
   const { home, away, date, round, league, season, isFinished, goals } = route.params.item;
 
   const scoreHome = score(goals, true);
   const scoreAway = score(goals, false);
+
+  const goalsArray = goalForWho(goals);
+
+  const goalsHome = goalsArray[0];
+  const goalsAway = goalsArray[1];
 
   return (
     <Container>
@@ -44,13 +60,13 @@ export const Game = ({ route }) => {
           <View style={styles.card}>
             {isFinished ? (
               <>
-                <TextWhite style={styles.text}>Koniec meczu</TextWhite>
+                <TextWhite style={styles.text}>{game.end}</TextWhite>
                 <TextWhite style={styles.score}>
                   {scoreHome} : {scoreAway}
                 </TextWhite>
               </>
             ) : (
-              <TextWhite style={styles.text}>Mecz odbędzie się</TextWhite>
+              <TextWhite style={styles.text}>{game.isNotFinished}</TextWhite>
             )}
           </View>
 
@@ -66,10 +82,46 @@ export const Game = ({ route }) => {
         </View>
 
         <View style={styles.infoWrap}>
+          <TextWhite style={styles.info}>
+            {league.name} {season.name}
+          </TextWhite>
+
+          <TextWhite style={styles.info}>
+            {game.round} {round}
+          </TextWhite>
+        </View>
+
+        <View style={styles.infoWrap}>
           {isFinished ? (
             <>
-              <TextWhite style={styles.info}>{game.info}</TextWhite>
-              <TextWhite>{game.scored}</TextWhite>
+              {goals.length > 0 ? (
+                <>
+                  <TextWhite style={styles.info}>{game.info}</TextWhite>
+                  <TextWhite>{game.scored}</TextWhite>
+                  <View style={styles.goals}>
+                    {goalsHome.map((goal) => {
+                      return (
+                        <View style={styles.goalsHome}>
+                          <TextWhite>
+                            {goal.amount} - {goal.shotBy.firstName} {goal.shotBy.lastName}
+                          </TextWhite>
+                        </View>
+                      );
+                    })}
+                    {goalsAway.map((goal) => {
+                      return (
+                        <View style={styles.goalsHome}>
+                          <TextWhite>
+                            {goal.amount} - {goal.shotBy.firstName} {goal.shotBy.lastName}
+                          </TextWhite>
+                        </View>
+                      );
+                    })}
+                  </View>
+                </>
+              ) : (
+                <TextWhite style={styles.info}>{game.noInfo}</TextWhite>
+              )}
             </>
           ) : (
             <TextWhite style={styles.info}>{game.afterFinish}</TextWhite>

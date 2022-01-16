@@ -40,4 +40,13 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
+  goals: {
+    flexDirection: 'row',
+  },
+  goalsHome: {
+    flex: 1,
+  },
+  goalsAway: {
+    flex: 1,
+  },
 });

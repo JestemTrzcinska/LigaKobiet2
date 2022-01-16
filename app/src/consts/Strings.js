@@ -48,4 +48,10 @@ export const game = {
   afterFinish: 'Informacje pojawią się po skończonym meczu',
   scored: 'Bramki:',
   info: 'Wydarzenia',
+  end: 'Koniec meczu',
+  isNotFinished: 'Mecz odbędzie się',
+  round: 'Runda:',
+  league: 'Liga:',
+  season: 'Sezon:',
+  noInfo: 'Brak wydarzeń odnotowanych w meczu',
 };
