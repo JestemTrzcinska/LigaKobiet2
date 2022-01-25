@@ -20,6 +20,7 @@ export const serverErrors = {
   playerNotFound: "Takiej zawodniczki nie znaleziono w bazie danych", //"Zawodniczki o takim id nie znaleziono w bazie danych"
   profileNotFound: "Ten użytkownik nie ma profilu", // Profilu nie znaleziono w bazie danych
   gameNotFound: "Nie ma meczu o takim id",
+  newNotFound: "Nie ma artykułu o takim id",
 
   clubsNotFound: "Nie ma ani jednego klubu w bazie danych.",
   leaguesNotFound: "Nie ma ani jednej ligi w bazie danych.",
@@ -27,6 +28,7 @@ export const serverErrors = {
   profilesNotFound: "W bazie danych nie ma profili",
   seasonsNotFound: "Nie ma ani jednego sezonu w bazie danych.",
   gamesNotFound: "Nie ma ani jednego meczu w bazie danych.",
+  newsNotFound: "Nie ma ani jednego artykułu w bazie danych.",
 
   userAlreadyExists: "Użytkownik o podanym emailu już istnieje.",
   seasonAlreadyExists: "Taki sezon już istnieje w bazie danych.", //"Taki sezon już istnieje."
@@ -42,6 +44,10 @@ export const validate = {
     "Słabe hasło! Wprowadź kombinację przynajmniej sześciu liter i cyfr.", // i znaków interpunktycjnych.',
   clubName: "Nazwa klubu jest wymagana.",
   leagueName: "Nazwa ligi jest wymagana.", // "Podanie nazwy ligi jest wymagane."
+
+  title: "Podanie tytułu artykułu jest wymagane",
+  description: "Podanie opisu artykułu jest wymagane",
+  image: "Podanie linku do zdjęcia artykułu jest wymagane",
 
   seasonName: "Nazwa sezonu jest wymagana.",
   seasonFrom: "Podanie daty 'od' jest wymagane.",

@@ -9,6 +9,7 @@ import players from "./routes/api/players.js";
 import profile from "./routes/api/profile.js";
 import seasons from "./routes/api/seasons.js";
 import users from "./routes/api/users.js";
+import news from "./routes/api/news.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/api/players", players);
 app.use("/api/profile", profile);
 app.use("/api/seasons", seasons);
 app.use("/api/users", users);
+app.use("/api/news", news);
 
 const PORT = process.env.PORT || 5000;
 
