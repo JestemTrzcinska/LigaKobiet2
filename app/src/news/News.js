@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View, ScrollView, TouchableOpacity } from 'react-native';
 import Containter from '../Container';
 import { TextWhite } from '../consts/Text';
 import { styles } from './news.style';
 import { single } from '../consts/strings';
 
-import { news } from '../hardCodingDb/news';
+import { getNews } from '../actions';
 
 export const News = ({ navigation, route }) => {
+  const [news, setNews] = useState();
+
+  useEffect(async () => {
+    setNews(await getNews());
+  }, [getNews]);
+
   return (
     <Containter>
       <ScrollView style={styles.view}>
-        {news.map((item) => {
+        {news?.map((item) => {
           return (
             <TouchableOpacity
               key={item.index}

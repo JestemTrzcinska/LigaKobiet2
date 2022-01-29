@@ -147,3 +147,18 @@ export const getSeasons = async () => {
 export const getSeasonById = async (id) => {
   return await getData(`http://localhost:3000/api/seasons/${id}`);
 };
+
+// @desc  Add news
+export const addNews = async (formData) => {
+  return await postData(`http://localhost:3000/api/news`, formData, config);
+};
+
+// @desc  Get all news
+export const getNews = async () => {
+  return await getData(`http://localhost:3000/api/news`);
+};
+
+// @desc  Get new by ID
+export const getNewsById = async (id) => {
+  return await getData(`http://localhost:3000/api/news/${id}`);
+};

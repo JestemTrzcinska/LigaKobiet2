@@ -3,7 +3,7 @@ import { check, validationResult } from "express-validator";
 
 import { serverErrors, validate } from "../../const/exceptions.js";
 
-import News from "../../models/News";
+import News from "../../models/News.js";
 
 const router = Router();
 
