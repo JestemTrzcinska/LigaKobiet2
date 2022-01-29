@@ -29,6 +29,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
   },
+  item2: {
+    flex: 2,
+    textAlign: 'center',
+  },
   nextTable: {
     paddingBottom: 50,
   },
@@ -47,5 +51,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     paddingBottom: 5,
+  },
+  roundName: {
+    flex: 4,
   },
 });

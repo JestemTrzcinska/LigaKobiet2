@@ -14,7 +14,7 @@ import { getGames, getLeagues, getSeasons } from '../actions';
 
 export const Stats = ({ navigation, route }) => {
   const [selectedValue, setSelectedValue] = useState('Ekstraliga');
-  const [selectedSeason, setSelectedSeason] = useState('2020/2021');
+  const [selectedSeason, setSelectedSeason] = useState('2021/2022');
 
   const [games, setGames] = useState();
   const [leagues, setLeagues] = useState();

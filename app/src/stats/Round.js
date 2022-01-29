@@ -29,11 +29,11 @@ export const Round = ({ navigation, rigthLeagueAndSeason, round, last = false })
               onPress={() => {
                 navigation.navigate(game.game, { item, name: item.league.name });
               }}>
-              <TextName styles={styles.name}>{item.home.name}</TextName>
+              <TextName style={styles.roundName}>{item.home.name}</TextName>
               <TextWhite style={styles.score}>
                 {item.isFinished ? `${score(item.goals, true)} : ${score(item.goals, false)}` : '- : -'}
               </TextWhite>
-              <TextName styles={styles.name}>{item.away.name}</TextName>
+              <TextName style={styles.roundName}>{item.away.name}</TextName>
               <TextWhite style={styles.date}>{new Date(item.date).toLocaleString('pl', optionsDate)}</TextWhite>
             </TouchableOpacity>
           );

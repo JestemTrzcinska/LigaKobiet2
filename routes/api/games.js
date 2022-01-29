@@ -129,7 +129,7 @@ router.post(
             });
           }
 
-          playerFromDB.clubs.map((clubItem) => {
+          const correct = playerFromDB.clubs.map((clubItem) => {
             if (
               clubItem.league.name === gameFields.league.name &&
               clubItem.season.name === gameFields.season.name
@@ -138,12 +138,16 @@ router.post(
                 clubItem.club.name === gameFields.home.name ||
                 clubItem.club.name === gameFields.away.name
               ) {
-                return res.status(404).json({
-                  errors: [{ msg: serverErrors.invalidShotBy }],
-                });
+                return "It's all good";
               }
             }
           });
+
+          if (!correct) {
+            return res.status(404).json({
+              errors: [{ msg: serverErrors.invalidShotBy }],
+            });
+          }
 
           gameFields.goals.push({
             amount: item.amount,

@@ -40,6 +40,10 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
+  scored: {
+    textAlign: 'center',
+    paddingBottom: 7,
+  },
   goals: {
     flexDirection: 'row',
   },

@@ -98,7 +98,7 @@ export const Table = ({ rigthLeagueAndSeason }) => {
         <TextWhite style={styles.item}>W</TextWhite>
         <TextWhite style={styles.item}>R</TextWhite>
         <TextWhite style={styles.item}>P</TextWhite>
-        <TextWhite style={styles.item}>B</TextWhite>
+        <TextWhite style={styles.item2}>B</TextWhite>
         <TextWhite style={styles.item}>pkt</TextWhite>
       </View>
       {table?.length > 0 ? (
@@ -108,12 +108,14 @@ export const Table = ({ rigthLeagueAndSeason }) => {
             return (
               <View style={styles.table} key={i}>
                 <TextWhite style={styles.item}>{i + 1}</TextWhite>
-                <TextWhite style={styles.name}>{k}</TextWhite>
+                <TextWhite style={styles.name} numberOfLines={1}>
+                  {k}
+                </TextWhite>
                 <TextWhite style={styles.item}>{v.gamesPlayed}</TextWhite>
                 <TextWhite style={styles.item}>{v.won}</TextWhite>
                 <TextWhite style={styles.item}>{v.draw}</TextWhite>
                 <TextWhite style={styles.item}>{v.lost}</TextWhite>
-                <TextWhite style={styles.item}>
+                <TextWhite style={styles.item2}>
                   {v.goalsScored}:{v.goalsLost}
                 </TextWhite>
                 <TextWhite style={styles.item}>{v.points}</TextWhite>

@@ -21,6 +21,7 @@ export const Register = ({ navigation }) => {
 
   onSubmit = async () => {
     try {
+      if (password !== password2) return Alert.alert('Hasła nie są takie same.');
       const user = await registerUser({
         firstName,
         lastName,

@@ -19,8 +19,8 @@ export const score = (goals, isHome) => {
   if (y.length == 1) return y[0];
   else if (y.length == 0) return 0;
   else {
-    const z = y.reduce((acc, item) => {
-      return acc + item.score;
+    const z = y.reduce((acc, def) => {
+      return acc + def;
     }, 0);
     return z;
   }
@@ -97,26 +97,26 @@ export const Game = ({ route }) => {
               {goals.length > 0 ? (
                 <>
                   <TextWhite style={styles.info}>{game.info}</TextWhite>
-                  <TextWhite>{game.scored}</TextWhite>
+                  <TextWhite style={styles.scored}>{game.scored}</TextWhite>
                   <View style={styles.goals}>
-                    {goalsHome.map((goal) => {
-                      return (
-                        <View style={styles.goalsHome}>
-                          <TextWhite>
+                    <View style={styles.goalsHome}>
+                      {goalsHome.map((goal, index) => {
+                        return (
+                          <TextWhite key={index}>
                             {goal.amount} - {goal.shotBy.firstName} {goal.shotBy.lastName}
                           </TextWhite>
-                        </View>
-                      );
-                    })}
-                    {goalsAway.map((goal) => {
-                      return (
-                        <View style={styles.goalsHome}>
-                          <TextWhite>
+                        );
+                      })}
+                    </View>
+                    <View style={styles.goalsHome}>
+                      {goalsAway.map((goal, index) => {
+                        return (
+                          <TextWhite key={index}>
                             {goal.amount} - {goal.shotBy.firstName} {goal.shotBy.lastName}
                           </TextWhite>
-                        </View>
-                      );
-                    })}
+                        );
+                      })}
+                    </View>
                   </View>
                 </>
               ) : (
