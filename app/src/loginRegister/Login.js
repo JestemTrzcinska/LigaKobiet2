@@ -6,7 +6,7 @@ import { AuthContext } from '../AuthContext';
 
 import { TextButton } from '../consts/Buttons';
 import { TextInputWhite, TextWhite } from '../consts/Text';
-import { placeholder, buttons, menu } from '../consts/strings';
+import { placeholder, buttons, menu } from '../consts/Strings';
 
 import { styles } from './loginRegister.style';
 import { loginUser } from '../actions';

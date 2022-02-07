@@ -5,7 +5,7 @@ import { styles } from './stats.style';
 
 import { TextWhite } from '../consts/Text';
 import { score } from '../game/Game';
-import { single } from '../consts/strings';
+import { single } from '../consts/Strings';
 
 export const Table = ({ rigthLeagueAndSeason }) => {
   // const [table, setTable] = useState(null);

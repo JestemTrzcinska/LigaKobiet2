@@ -7,7 +7,7 @@ import { TextName, TextWhite } from '../consts/Text';
 
 import { styles } from './schedule.style';
 import { optionsLong } from '../consts/options';
-import { single } from '../consts/strings';
+import { single } from '../consts/Strings';
 
 import { getGames } from '../actions';
 

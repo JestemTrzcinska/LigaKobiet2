@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { game } from '../consts/strings';
+import { game } from '../consts/Strings';
 import { TextName, TextWhite } from '../consts/Text';
 import { score } from '../game/Game';
 

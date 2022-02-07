@@ -4,7 +4,7 @@ import { TextWhite } from '../consts/Text';
 
 import { styles } from './stats.style';
 
-import { single } from '../consts/strings';
+import { single } from '../consts/Strings';
 import { getGames } from '../actions';
 
 export const Queens = ({ rigthLeagueAndSeason }) => {

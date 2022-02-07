@@ -4,7 +4,7 @@ import Containter from './Container';
 import { AuthContext } from './AuthContext';
 
 import { TextButton, TextButtonNav } from './consts/Buttons';
-import { menu } from './consts/strings';
+import { menu } from './consts/Strings';
 
 export const HomeScreen = ({ navigation }) => {
   const [isLogged, setIsLogged] = useState(true);

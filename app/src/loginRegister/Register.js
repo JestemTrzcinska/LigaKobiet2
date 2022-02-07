@@ -7,7 +7,7 @@ import { TextButton } from '../consts/Buttons';
 import { TextInputWhite, TextWhite } from '../consts/Text';
 
 import { styles } from './loginRegister.style';
-import { placeholder, buttons, menu } from '../consts/strings';
+import { placeholder, buttons, menu } from '../consts/Strings';
 import { registerUser } from '../actions';
 
 export const Register = ({ navigation }) => {

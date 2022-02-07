@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/JestemTrzcinska/LigaKobiet2#readme",
   "dependencies": {
+    "@react-native-community/cli": "^7.0.1",
+    "@react-native-community/cli-platform-android": "^7.0.1",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "dotenv": "^10.0.0",

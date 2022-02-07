@@ -4,7 +4,7 @@ import { TextName, TextWhite } from '../consts/Text';
 
 import { styles } from './stats.style';
 
-import { game, single } from '../consts/strings';
+import { game, single } from '../consts/Strings';
 import { optionsDate } from '../consts/options';
 import { score } from '../game/Game';
 

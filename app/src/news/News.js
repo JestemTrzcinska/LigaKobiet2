@@ -3,7 +3,7 @@ import { Image, View, ScrollView, TouchableOpacity } from 'react-native';
 import Containter from '../Container';
 import { TextWhite } from '../consts/Text';
 import { styles } from './news.style';
-import { single } from '../consts/strings';
+import { single } from '../consts/Strings';
 
 import { getNews } from '../actions';
 

@@ -15,7 +15,7 @@ import { Profile } from './src/profile/Profile';
 import { EditProfile } from './src/profile/EditProfile';
 import { CreateProfile } from './src/profile/CreateProfile';
 
-import { game, menu, single } from './src/consts/strings';
+import { game, menu, single } from './src/consts/Strings';
 import { NewsItem } from './src/news/NewsItem';
 import { Game } from './src/game/Game';
 

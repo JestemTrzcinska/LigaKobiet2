@@ -1,4 +1,5 @@
-export const menu = {
+export const
+ menu = {
   title: 'Liga Kobiet',
   schedule: 'Harmonogram',
   stats: 'Statystyki',

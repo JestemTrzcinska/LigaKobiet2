@@ -4,7 +4,7 @@ import Containter from '../Container';
 
 import { TextButton } from '../consts/Buttons';
 import { TextInputWhite, TextWhite } from '../consts/Text';
-import { buttons, profile, menu } from '../consts/strings';
+import { buttons, profile, menu } from '../consts/Strings';
 
 import { styles } from './Profile.style';
 import { addProfile, getClubs, getUsersProfile } from '../actions';

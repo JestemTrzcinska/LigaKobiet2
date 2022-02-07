@@ -3,7 +3,7 @@ import { Image, ScrollView, View } from 'react-native';
 import { TextWhite } from '../consts/Text';
 import Container from '../Container';
 import { optionsFull } from '../consts/options';
-import { game } from '../consts/strings';
+import { game } from '../consts/Strings';
 
 import { styles } from './game.style';
 

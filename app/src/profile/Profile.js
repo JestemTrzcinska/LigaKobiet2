@@ -5,7 +5,7 @@ import { AuthContext } from '../AuthContext';
 
 import { TextButton } from '../consts/Buttons';
 import { TextWhite } from '../consts/Text';
-import { buttons, profile, menu } from '../consts/strings';
+import { buttons, profile, menu } from '../consts/Strings';
 
 import { styles } from './Profile.style';
 import { getUsersProfile } from '../actions';
