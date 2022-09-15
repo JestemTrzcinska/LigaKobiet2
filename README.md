@@ -1,4 +1,4 @@
-# LigaKobiet2
+# LigaKobiet2 - React Native Application for football statistics. Engineering application.
  
 Developers setup
 
